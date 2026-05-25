@@ -52,8 +52,8 @@ O jogo é um **único arquivo HTML autossuficiente** — sem build, sem dependê
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/<seu-usuario>/shootem-in-apex-striker.git
-cd shootem-in-apex-striker
+git clone https://github.com/imaalan/Shoot_in_me_REVOLUTION.git
+cd Shoot_in_me_REVOLUTION
 
 # 2. Abra o index.html no navegador (duplo clique já funciona)
 #    ou suba um servidor local:
@@ -64,7 +64,7 @@ python3 -m http.server 8000
 ### Publicar online (GitHub Pages)
 
 Como o `index.html` está na raiz, é só ativar o Pages:
-`Settings → Pages → Source: Deploy from a branch → main / root`. O jogo fica disponível em `https://<seu-usuario>.github.io/shootem-in-apex-striker/`.
+`Settings → Pages → Source: Deploy from a branch → main / root`. O jogo fica disponível em `https://imaalan.github.io/Shoot_in_me_REVOLUTION/`.
 
 ---
 
@@ -115,7 +115,7 @@ Tokens extraídos do catálogo [**awesome-design-md**](https://github.com/VoltAg
 ## 📁 Estrutura do projeto
 
 ```
-shootem-in-apex-striker/
+Shoot_in_me_REVOLUTION/
 ├── index.html      # Jogo completo (HTML + CSS + JS em um arquivo)
 ├── README.md
 ├── LICENSE
