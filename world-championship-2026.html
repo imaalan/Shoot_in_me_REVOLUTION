@@ -1,0 +1,2816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>World Championship 2026 - Shoot Em In</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a1a2e'/%3E%3Ctext x='32' y='28' font-size='14' font-family='sans-serif' font-weight='bold' fill='%23ffcc00' text-anchor='middle'%3EWC%3C/text%3E%3Ctext x='32' y='48' font-size='18' font-family='sans-serif' font-weight='bold' fill='%23ff0066' text-anchor='middle'%3E26%3C/text%3E%3C/svg%3E">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiV29ybGQgQ2hhbXBpb25zaGlwIDIwMjYiLCJzaG9ydF9uYW1lIjoiV0MyMDI2Iiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMxYTFhMmUiLCJ0aGVtZV9jb2xvciI6IiMxYTFhMmUiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2NCA2NCclM0UlM0NyZWN0IHdpZHRoPSc2NCcgaGVpZ2h0PSc2NCcgcng9JzEyJyBmaWxsPSclMjFhMWEyZSclM0UlM0N0ZXh0IHg9JzMyJyB5PScyOCcgZm9udC1zaXplPScxNCcgZm9udC1mYW1pbHk9J1NhbnMtc2VyaWYnIGZvbnQtd2VpZ2h0PSdib2xkJyBmaWxsPSclMjNmZmMwMCcgdGV4dC1hbmNob3I9J21pZGRsZSclM0VXQyUzQ3RleHQgeD0nMzInIHk9JzQ4JyBmb250LXNpemU9JzE4JyBmb250LWZhbWlseT0nU2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9JyUyMGZmMDA2NicgdGV4dC1hbmNob3I9J21pZGRsZSclM0UyNiUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn0seyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDY0IDY0JyUzRSUzQ3JlY3Qgd2lkdGg9JzY0JyBoZWlnaHQ9JzY0JyByeD0nMTInIGZpbGw9JyUyMWExYTJlJy8lM0UlM0N0ZXh0IHg9JzMyJyB5PScyOCcgZm9udC1zaXplPScxNCcgZm9udC1mYW1pbHk9J1NhbnMtc2VyaWYnIGZvbnQtd2VpZ2h0PSdib2xkJyBmaWxsPSclMjNmZmMwMCcgdGV4dC1hbmNob3I9J21pZGRsZSclM0VXQyUzQ3RleHQgeD0nMzInIHk9JzQ4JyBmb250LXNpemU9JzE4JyBmb250LWZhbWlseT0nU2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9JyUyMGZmMDA2NicgdGV4dC1hbmNob3I9J21pZGRsZSclM0UyNiUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Black+Ops+One&family=Roboto+Condensed:wght@400;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; user-select: none; -webkit-user-select: none; }
+
+        body {
+            overflow: hidden;
+            background: #0f0f1a;
+            font-family: 'Roboto Condensed', sans-serif;
+            color: #fff;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #gameCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        /* HUD GRAFITE */
+        .hud-layer {
+            position: fixed;
+            z-index: 10;
+            pointer-events: none;
+            width: 100%; height: 100%;
+        }
+
+        .graffiti-text {
+            font-family: 'Permanent Marker', cursive;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            filter: drop-shadow(3px 3px 0px #000) drop-shadow(-1px -1px 0px #ff0066);
+        }
+
+        .hud-panel {
+            background: rgba(20, 20, 35, 0.92);
+            border: 3px solid #ff0066;
+            border-radius: 4px;
+            padding: 12px 18px;
+            position: absolute;
+            pointer-events: auto;
+            box-shadow: 0 0 20px rgba(255, 0, 102, 0.3), inset 0 0 30px rgba(255, 0, 102, 0.05);
+            transform: skewX(-3deg);
+        }
+
+        .hud-panel::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #ff0066, #00d4ff, #ffcc00, #ff0066);
+            z-index: -1;
+            border-radius: 6px;
+            opacity: 0.3;
+        }
+
+        #scoreBoard {
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%) skewX(-3deg);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 28px;
+            min-width: 320px;
+            justify-content: center;
+        }
+
+        .team-score { display: flex; align-items: center; gap: 10px; }
+        .team-flag { width: 40px; height: 28px; border-radius: 3px; border: 2px solid #fff; }
+        .score-number { font-family: 'Black Ops One', cursive; font-size: 36px; color: #ffcc00; text-shadow: 0 0 10px rgba(255, 204, 0, 0.5); }
+        .score-divider { color: #ff0066; font-size: 32px; font-weight: bold; }
+
+        #matchInfo {
+            top: 15px;
+            right: 15px;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        #shotInfo {
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%) skewX(-3deg);
+            font-size: 18px;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        #powerMeter {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 24px;
+            background: rgba(0,0,0,0.6);
+            border: 2px solid #ff0066;
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #powerFill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00ff88, #ffcc00, #ff0066);
+            transition: width 0.1s;
+        }
+
+        #windIndicator {
+            top: 80px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .wind-arrow {
+            font-size: 24px;
+            color: #00d4ff;
+            transition: transform 0.5s;
+        }
+
+        #staminaBar, #humidityBar {
+            position: absolute;
+            right: 15px;
+            width: 180px;
+            height: 20px;
+            background: rgba(0,0,0,0.6);
+            border: 2px solid #444;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #staminaBar { top: 140px; }
+        #humidityBar { top: 170px; }
+
+        .bar-fill {
+            height: 100%;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .bar-label {
+            position: absolute;
+            right: 200px;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
+        }
+
+        #staminaLabel { top: 142px; }
+        #humidityLabel { top: 172px; }
+
+        .alert-pulse {
+            animation: pulseAlert 0.8s infinite alternate;
+        }
+
+        @keyframes pulseAlert {
+            from { border-color: #ff0066; box-shadow: 0 0 10px rgba(255,0,102,0.3); }
+            to { border-color: #ffcc00; box-shadow: 0 0 25px rgba(255,204,0,0.6); }
+        }
+
+        /* SCREENS */
+        .screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 100;
+            background: rgba(15, 15, 26, 0.97);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+
+        .screen.hidden { opacity: 0; pointer-events: none; }
+
+        .title-main {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(36px, 8vw, 72px);
+            color: #ffcc00;
+            text-align: center;
+            text-shadow: 4px 4px 0px #ff0066, 8px 8px 0px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+            transform: rotate(-2deg);
+        }
+
+        .subtitle {
+            font-family: 'Black Ops One', cursive;
+            font-size: clamp(14px, 3vw, 24px);
+            color: #00d4ff;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+        }
+
+        .btn-graffiti {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 22px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ff0066, #ff3366);
+            border: 3px solid #fff;
+            color: #fff;
+            cursor: pointer;
+            transform: skewX(-5deg) rotate(-1deg);
+            transition: all 0.2s;
+            margin: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        .btn-graffiti:hover {
+            transform: skewX(-5deg) rotate(-1deg) scale(1.05);
+            box-shadow: 8px 8px 0px #000;
+            background: linear-gradient(135deg, #ff3366, #ff0066);
+        }
+
+        .btn-graffiti:active {
+            transform: skewX(-5deg) rotate(-1deg) scale(0.95);
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .team-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .team-card:hover {
+            border-color: #ff0066;
+            background: rgba(255,0,102,0.1);
+            transform: translateY(-3px);
+        }
+
+        .team-card.selected {
+            border-color: #ffcc00;
+            background: rgba(255,204,0,0.15);
+            box-shadow: 0 0 15px rgba(255,204,0,0.3);
+        }
+
+        .team-color {
+            width: 100%; height: 30px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            border: 1px solid #fff;
+        }
+
+        .team-name { font-size: 13px; font-weight: bold; }
+        .team-players { font-size: 10px; color: #aaa; margin-top: 4px; }
+
+        .group-table {
+            width: 90%;
+            max-width: 700px;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .group-table th, .group-table td {
+            border: 1px solid #444;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        .group-table th {
+            background: rgba(255,0,102,0.2);
+            font-family: 'Permanent Marker', cursive;
+        }
+
+        .group-table .highlight {
+            background: rgba(255,204,0,0.15);
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .bracket-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .bracket-match {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+
+        .bracket-match.active {
+            border-color: #ffcc00;
+            background: rgba(255,204,0,0.1);
+        }
+
+        .bracket-match.finished {
+            opacity: 0.6;
+        }
+
+        .match-result { font-family: 'Black Ops One', cursive; color: #ffcc00; font-size: 18px; }
+
+        .narration-text {
+            position: fixed;
+            bottom: 200px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Black Ops One', cursive;
+            font-size: 48px;
+            color: #ffcc00;
+            text-shadow: 0 0 30px rgba(255,204,0,0.8), 4px 4px 0px #000;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .narration-text.show { opacity: 1; }
+
+        .altitude-sign {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%) rotate(-5deg);
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #fff;
+            padding: 10px 15px;
+            font-family: 'Black Ops One', cursive;
+            font-size: 14px;
+            color: #fff;
+            z-index: 10;
+            display: none;
+        }
+
+        .tutorial-box {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.85);
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
+            padding: 15px;
+            max-width: 280px;
+            font-size: 13px;
+            z-index: 20;
+            line-height: 1.5;
+        }
+
+        .tutorial-box kbd {
+            background: #333;
+            border: 1px solid #666;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .energy-orb {
+            position: fixed;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffcc00, #ff9900);
+            box-shadow: 0 0 20px #ffcc00, 0 0 40px #ff9900;
+            z-index: 5;
+            pointer-events: none;
+            display: none;
+        }
+
+        .energy-orb.pulse {
+            animation: orbPulse 1s infinite;
+        }
+
+        @keyframes orbPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        #loading {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #0f0f1a;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader {
+            width: 60px; height: 60px;
+            border: 4px solid #333;
+            border-top-color: #ff0066;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .lang-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #444;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        .lang-btn.active { border-color: #ffcc00; color: #ffcc00; }
+
+        @media (max-width: 600px) {
+            .teams-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            #scoreBoard { font-size: 18px; min-width: 220px; }
+            .score-number { font-size: 24px; }
+            .title-main { font-size: 32px; }
+            .tutorial-box { display: none; }
+        }
+
+        /* ACCESSIBILITY: Colorblind Modes */
+        body.cb-protanopia {
+            filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeColorMatrix type='matrix' values='0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0'/%3E%3C/filter%3E%3C/svg%3E#f");
+        }
+        body.cb-deuteranopia {
+            filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeColorMatrix type='matrix' values='0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0'/%3E%3C/filter%3E%3C/svg%3E#f");
+        }
+        body.cb-tritanopia {
+            filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeColorMatrix type='matrix' values='0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0'/%3E%3C/filter%3E%3C/svg%3E#f");
+        }
+        body.high-contrast {
+            filter: contrast(1.4) saturate(1.2);
+        }
+        body.high-contrast .hud-panel {
+            border-width: 4px;
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        /* Accessibility toggle button */
+        #a11yToggle {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 200;
+            pointer-events: auto;
+            background: rgba(20, 20, 35, 0.92);
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #00d4ff;
+            transition: all 0.2s;
+        }
+        #a11yToggle:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: scale(1.1);
+        }
+        #a11yMenu {
+            position: fixed;
+            bottom: 65px;
+            right: 15px;
+            z-index: 200;
+            background: rgba(20, 20, 35, 0.95);
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
+            padding: 10px;
+            display: none;
+            pointer-events: auto;
+            min-width: 160px;
+        }
+        #a11yMenu.show { display: block; }
+        #a11yMenu button {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            background: none;
+            border: 1px solid transparent;
+            color: #fff;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 13px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+        #a11yMenu button:hover { border-color: #ffcc00; color: #ffcc00; }
+        #a11yMenu button.active { background: rgba(255, 204, 0, 0.15); border-color: #ffcc00; color: #ffcc00; }
+
+        /* Screen reader only text */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus visible for keyboard nav */
+        *:focus-visible {
+            outline: 3px solid #ffcc00;
+            outline-offset: 2px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <div id="loading">
+        <div class="loader"></div>
+        <p style="margin-top:20px;font-family:'Permanent Marker',cursive;color:#ffcc00;">LOADING WC 2026...</p>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="hud-layer" id="hudLayer" style="display:none;" aria-live="polite">
+        <div id="scoreBoard" class="hud-panel" role="status" aria-label="Match score">
+            <div class="team-score">
+                <div class="team-flag" id="flagHome" aria-hidden="true"></div>
+                <span id="nameHome" class="graffiti-text">HOME</span>
+                <span class="score-number" id="scoreHome" aria-label="Home score">0</span>
+            </div>
+            <span class="score-divider" aria-hidden="true">x</span>
+            <div class="team-score">
+                <span class="score-number" id="scoreAway" aria-label="Away score">0</span>
+                <span id="nameAway" class="graffiti-text">AWAY</span>
+                <div class="team-flag" id="flagAway" aria-hidden="true"></div>
+            </div>
+        </div>
+
+        <div id="matchInfo" class="hud-panel" aria-label="Match phase information">
+            <div id="matchPhase">FASE DE GRUPOS</div>
+            <div id="matchRound">Rodada 1/3</div>
+        </div>
+
+        <div id="windIndicator" class="hud-panel" aria-label="Wind direction and speed">
+            <span class="graffiti-text">VENTO</span>
+            <span class="wind-arrow" id="windArrow" aria-hidden="true">&#10148;</span>
+            <span id="windSpeed">0 km/h</span>
+        </div>
+
+        <div id="staminaLabel" class="bar-label graffiti-text" aria-hidden="true">CANCAO</div>
+        <div id="staminaBar" role="meter" aria-label="Stamina" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div class="bar-fill" id="staminaFill" style="width:100%;background:#00ff88;"></div></div>
+
+        <div id="humidityLabel" class="bar-label graffiti-text" aria-hidden="true">UMIDADE</div>
+        <div id="humidityBar" role="meter" aria-label="Humidity" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><div class="bar-fill" id="humidityFill" style="width:50%;background:#00d4ff;"></div></div>
+
+        <div id="shotInfo" class="hud-panel" aria-live="polite">
+            <span class="graffiti-text" id="shotType">PENALTI</span>
+            <span id="shotNumber">Chute 1/5</span>
+        </div>
+
+        <div id="powerMeter"><div id="powerFill"></div></div>
+
+        <div class="altitude-sign" id="altitudeSign">
+            <div>ALTITUDE</div>
+            <div id="altitudeValue" style="font-size:22px;color:#ffcc00;">2,240m</div>
+        </div>
+    </div>
+
+    <div class="narration-text" id="narration" aria-live="assertive" role="alert"></div>
+    <div class="energy-orb" id="energyOrb"></div>
+
+    <div class="tutorial-box" id="tutorialBox" role="complementary" aria-label="Game instructions">
+        <strong style="color:#ffcc00;font-family:'Permanent Marker',cursive;">COMO JOGAR</strong><br>
+        • <kbd>Mouse</kbd>: Clique e arraste para mirar<br>
+        • <kbd>Teclado</kbd>: ←→ para mirar, ↑↓ força, ESPAÇO chuta<br>
+        • <kbd>Touch</kbd>: Toque e arraste<br>
+        • Acerte o <span style="color:#ffcc00;">ORBE DOURADO</span> para recuperar energia!<br>
+        • Cuidado com o <span style="color:#00d4ff;">VENTO</span> e <span style="color:#ff0066;">CANSAÇO</span>
+    </div>
+
+    <!-- Accessibility -->
+    <div id="a11yToggle" role="button" tabindex="0" aria-label="Accessibility settings" title="Accessibility (Alt+A)">
+        <span aria-hidden="true">&#9881;</span>
+    </div>
+    <div id="a11yMenu" role="menu" aria-label="Accessibility options">
+        <button role="menuitem" onclick="setA11yMode('none')">Default Colors</button>
+        <button role="menuitem" onclick="setA11yMode('cb-protanopia')">Protanopia (Red-Blind)</button>
+        <button role="menuitem" onclick="setA11yMode('cb-deuteranopia')">Deuteranopia (Green-Blind)</button>
+        <button role="menuitem" onclick="setA11yMode('cb-tritanopia')">Tritanopia (Blue-Blind)</button>
+        <button role="menuitem" onclick="setA11yMode('high-contrast')">High Contrast</button>
+    </div>
+
+    <!-- SCREENS -->
+    <div class="screen" id="screenTitle" role="main" aria-label="Title screen">
+        <div class="lang-selector" role="radiogroup" aria-label="Language selection">
+            <button class="lang-btn active" onclick="setLang('pt')" role="radio" aria-checked="true" aria-label="Portugues">PT</button>
+            <button class="lang-btn" onclick="setLang('en')" role="radio" aria-checked="false" aria-label="English">EN</button>
+        </div>
+        <h1 class="title-main">WORLD CHAMPIONSHIP<br>2026</h1>
+        <p class="subtitle">SHOOT EM IN RELOADED</p>
+        <button class="btn-graffiti" onclick="goToTeamSelect()" id="btnStart" aria-label="Start new tournament">NOVO TORNEIO</button>
+        <button class="btn-graffiti" onclick="loadGame()" id="btnContinue" style="display:none;" aria-label="Continue saved game">CONTINUAR</button>
+        <button class="btn-graffiti" onclick="showHowToPlay()" id="btnHowTo" aria-label="How to play instructions">COMO JOGAR</button>
+    </div>
+
+    <div class="screen hidden" id="screenTeams" role="main" aria-label="Team selection screen">
+        <h2 class="graffiti-text" style="font-size:32px;margin-bottom:20px;color:#ffcc00;" id="txtSelectTeam">ESCOLHA SUA SELECAO</h2>
+        <div class="teams-grid" id="teamsGrid" role="listbox" aria-label="Available teams"></div>
+        <button class="btn-graffiti" onclick="confirmTeam()" id="btnConfirm" style="margin-top:20px;" aria-label="Confirm selected team">CONFIRMAR</button>
+        <button class="btn-graffiti" onclick="backToTitle()" style="background:#444;" aria-label="Go back to title screen">VOLTAR</button>
+    </div>
+
+    <div class="screen hidden" id="screenTournament" role="main" aria-label="Tournament bracket screen">
+        <h2 class="graffiti-text" style="font-size:32px;margin-bottom:10px;color:#ffcc00;" id="tournamentTitle">TORNEIO</h2>
+        <div id="tournamentContent" aria-live="polite"></div>
+        <button class="btn-graffiti" onclick="startNextMatch()" id="btnNextMatch" style="margin-top:20px;" aria-label="Start next match">PROXIMA PARTIDA</button>
+        <button class="btn-graffiti" onclick="saveAndQuit()" style="background:#444;" aria-label="Save game and return to title">SALVAR E SAIR</button>
+    </div>
+
+    <div class="screen hidden" id="screenMatchResult" role="main" aria-label="Match result screen">
+        <h2 class="graffiti-text" style="font-size:42px;color:#ffcc00;" id="resultTitle">VITORIA!</h2>
+        <div style="font-size:24px;margin:20px;" id="resultScore">2 x 1</div>
+        <div style="font-size:16px;color:#aaa;margin-bottom:30px;" id="resultDetail"></div>
+        <button class="btn-graffiti" onclick="continueTournament()" id="btnContinueTournament" aria-label="Continue tournament">CONTINUAR</button>
+    </div>
+
+    <div class="screen hidden" id="screenHowTo" role="dialog" aria-label="How to play" aria-modal="true">
+        <h2 class="graffiti-text" style="font-size:32px;color:#ffcc00;margin-bottom:20px;">COMO JOGAR</h2>
+        <div style="max-width:600px;text-align:left;line-height:2;font-size:16px;padding:20px;" role="document">
+            <p><strong style="color:#ff0066;">OBJETIVO:</strong> Leve sua selecao ao titulo do World Championship 2026!</p>
+            <p><strong style="color:#00d4ff;">CONTROLES:</strong></p>
+            <p>• Mouse/Touch: Clique e arraste para definir direcao e forca</p>
+            <p>• Teclado: Setas para mirar, ESPACO para chutar com forca atual</p>
+            <p><strong style="color:#ffcc00;">MECANICAS:</strong></p>
+            <p>• 5 cobrancas por partida (penaltis ou faltas)</p>
+            <p>• Cada erro = gol do adversario</p>
+            <p>• Cansaco reduz sua forca a cada chute</p>
+            <p>• Acerte o <span style="color:#ffcc00;">ORBE DOURADO</span> para recuperar energia</p>
+            <p>• Altitude afeta a fisica da bola (mais rapida, menos curva)</p>
+            <p>• Umidade aumenta o arrasto do ar</p>
+            <p>• Vento muda a trajetoria — observe a bandeirinha!</p>
+            <p>• Goleiro fica mais rapido nas fases finais</p>
+        </div>
+        <button class="btn-graffiti" onclick="backToTitle()" aria-label="Close and go back">VOLTAR</button>
+    </div>
+
+    <div class="screen hidden" id="screenChampion" role="main" aria-label="Champion celebration screen">
+        <h1 class="title-main" style="font-size:56px;">CAMPEAO!</h1>
+        <div id="championTeam" style="font-size:28px;color:#ffcc00;margin:20px;font-family:'Black Ops One',cursive;" aria-live="assertive"></div>
+        <div style="font-size:72px;margin:20px;" aria-hidden="true">&#127942;</div>
+        <button class="btn-graffiti" onclick="resetGame()" aria-label="Start a new tournament">NOVO TORNEIO</button>
+    </div>
+
+<script>
+// ==================== CONFIGURAÇÃO E DADOS ====================
+const LANG = { pt: {}, en: {} };
+let currentLang = 'pt';
+
+const TEXTS = {
+    pt: {
+        start: "NOVO TORNEIO", continue: "CONTINUAR", howTo: "COMO JOGAR",
+        selectTeam: "ESCOLHA SUA SELEÇÃO", confirm: "CONFIRMAR", back: "VOLTAR",
+        nextMatch: "PRÓXIMA PARTIDA", saveQuit: "SALVAR E SAIR",
+        win: "VITÓRIA!", lose: "DERROTA!", draw: "EMPATE!",
+        penalty: "PÊNALTI", freekick: "FALTA", wind: "VENTO",
+        groupStage: "FASE DE GRUPOS", roundOf16: "OITAVAS", quarter: "QUARTAS", semi: "SEMI", final: "FINAL",
+        shot: "Chute", of: "de", round: "Rodada",
+        champion: "CAMPEÃO!", newTournament: "NOVO TORNEIO",
+        goal: "GOL!", saved: "DEFENDEU!", post: "NA TRAVE!", miss: "ERROU!",
+        goldenGoal: "GOL DE OURO!", extraTime: "PRORROGAÇÃO",
+        stamina: "CANSAÇO", humidity: "UMIDADE", altitude: "ALTITUDE",
+        howToPlay: "COMO JOGAR"
+    },
+    en: {
+        start: "NEW TOURNAMENT", continue: "CONTINUE", howTo: "HOW TO PLAY",
+        selectTeam: "SELECT YOUR TEAM", confirm: "CONFIRM", back: "BACK",
+        nextMatch: "NEXT MATCH", saveQuit: "SAVE & QUIT",
+        win: "VICTORY!", lose: "DEFEAT!", draw: "DRAW!",
+        penalty: "PENALTY", freekick: "FREE KICK", wind: "WIND",
+        groupStage: "GROUP STAGE", roundOf16: "ROUND OF 16", quarter: "QUARTERFINALS", semi: "SEMIFINALS", final: "FINAL",
+        shot: "Shot", of: "of", round: "Round",
+        champion: "CHAMPION!", newTournament: "NEW TOURNAMENT",
+        goal: "GOAL!", saved: "SAVED!", post: "HIT THE POST!", miss: "MISS!",
+        goldenGoal: "GOLDEN GOAL!", extraTime: "EXTRA TIME",
+        stamina: "STAMINA", humidity: "HUMIDITY", altitude: "ALTITUDE",
+        howToPlay: "HOW TO PLAY"
+    }
+};
+
+function t(key) { return TEXTS[currentLang][key] || key; }
+function setLang(l) {
+    currentLang = l;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
+    updateUITexts();
+}
+function updateUITexts() {
+    document.getElementById('btnStart').textContent = t('start');
+    document.getElementById('btnContinue').textContent = t('continue');
+    document.getElementById('btnHowTo').textContent = t('howTo');
+    document.getElementById('btnConfirm').textContent = t('confirm');
+    document.getElementById('btnNextMatch').textContent = t('nextMatch');
+    document.getElementById('staminaLabel').textContent = t('stamina');
+    document.getElementById('humidityLabel').textContent = t('humidity');
+    document.getElementById('txtSelectTeam').textContent = t('selectTeam');
+    document.getElementById('tournamentTitle').textContent = t('groupStage');
+}
+
+// 48 Seleções da Copa 2026
+const TEAMS = [
+    // CONMEBOL (6-7)
+    { id: 'bra', name: 'Brasil', nameEn: 'Brazil', colors: ['#009c3b', '#ffdf00'], players: ['Neymarr', 'Pelézinho', 'Ronaldão'], attr: {forca:9, precisao:8, curva:9} },
+    { id: 'arg', name: 'Argentina', nameEn: 'Argentina', colors: ['#6cabdd', '#fff'], players: ['Messy', 'Diablito', 'Julianzito'], attr: {forca:8, precisao:9, curva:8} },
+    { id: 'uru', name: 'Uruguai', nameEn: 'Uruguay', colors: ['#0038a8', '#fff'], players: ['Suarezz', 'Cavann', 'Valverd'], attr: {forca:8, precisao:7, curva:7} },
+    { id: 'col', name: 'Colômbia', nameEn: 'Colombia', colors: ['#fcdd09', '#003893'], players: ['Jamesito', 'Falcann', 'Cuadrad'], attr: {forca:7, precisao:8, curva:8} },
+    { id: 'par', name: 'Paraguai', nameEn: 'Paraguay', colors: ['#d52b1e', '#fff'], players: ['Guerrerito', 'Almironn', 'Cardoz'], attr: {forca:7, precisao:6, curva:6} },
+    { id: 'ecu', name: 'Equador', nameEn: 'Ecuador', colors: ['#ffdd00', '#0072ce'], players: ['Valencian', 'Caiced', 'Platita'], attr: {forca:7, precisao:7, curva:7} },
+    { id: 'chi', name: 'Chile', nameEn: 'Chile', colors: ['#d52b1e', '#fff'], players: ['Sanchezito', 'Vidalz', 'Bravonn'], attr: {forca:6, precisao:7, curva:7} },
+    { id: 'per', name: 'Peru', nameEn: 'Peru', colors: ['#d91023', '#fff'], players: ['Guerrerin', 'Carrill', 'Farfann'], attr: {forca:6, precisao:6, curva:6} },
+    // UEFA (16)
+    { id: 'fra', name: 'França', nameEn: 'France', colors: ['#002395', '#fff'], players: ['Mbappéz', 'Griezman', 'Dembélé'], attr: {forca:9, precisao:8, curva:8} },
+    { id: 'ger', name: 'Alemanha', nameEn: 'Germany', colors: ['#fff', '#000'], players: ['Mullerz', 'Musialaa', 'Wirtzz'], attr: {forca:8, precisao:8, curva:7} },
+    { id: 'esp', name: 'Espanha', nameEn: 'Spain', colors: ['#aa151b', '#f1bf00'], players: ['Yamall', 'Pedrito', 'Gavii'], attr: {forca:8, precisao:9, curva:8} },
+    { id: 'eng', name: 'Inglaterra', nameEn: 'England', colors: ['#fff', '#cf081f'], players: ['Kanezz', 'Bellinga', 'Fodenzz'], attr: {forca:8, precisao:8, curva:7} },
+    { id: 'por', name: 'Portugal', nameEn: 'Portugal', colors: ['#006600', '#ff0000'], players: ['CR9', 'Leaoz', 'Silvaa'], attr: {forca:9, precisao:7, curva:8} },
+    { id: 'ned', name: 'Holanda', nameEn: 'Netherlands', colors: ['#ff4f00', '#fff'], players: ['Gakpoo', 'DeJongg', 'VanDijkk'], attr: {forca:8, precisao:8, curva:7} },
+    { id: 'ita', name: 'Itália', nameEn: 'Italy', colors: ['#0066cc', '#fff'], players: ['Barellaa', 'Chiesaa', 'Donnarum'], attr: {forca:7, precisao:8, curva:7} },
+    { id: 'bel', name: 'Bélgica', nameEn: 'Belgium', colors: ['#000', '#ffd700'], players: ['DeBruyne', 'Lukakoo', 'Trossar'], attr: {forca:8, precisao:8, curva:8} },
+    { id: 'cro', name: 'Croácia', nameEn: 'Croatia', colors: ['#ff0000', '#fff'], players: ['Modricc', 'Kovacic', 'Gvardiol'], attr: {forca:7, precisao:8, curva:8} },
+    { id: 'den', name: 'Dinamarca', nameEn: 'Denmark', colors: ['#c60c30', '#fff'], players: ['Hojlundd', 'Eriksen', 'Christen'], attr: {forca:7, precisao:7, curva:6} },
+    { id: 'sui', name: 'Suíça', nameEn: 'Switzerland', colors: ['#da020e', '#fff'], players: ['Shaqirii', 'Xhakaa', 'Sommer'], attr: {forca:6, precisao:7, curva:6} },
+    { id: 'aut', name: 'Áustria', nameEn: 'Austria', colors: ['#ed2939', '#fff'], players: ['Arnautov', 'Sabitzer', 'Alaba'], attr: {forca:6, precisao:7, curva:6} },
+    { id: 'pol', name: 'Polônia', nameEn: 'Poland', colors: ['#fff', '#dc143c'], players: ['Lewandow', 'Zielins', 'Szcznes'], attr: {forca:7, precisao:7, curva:6} },
+    { id: 'srb', name: 'Sérvia', nameEn: 'Serbia', colors: ['#c6363c', '#0c4076'], players: ['Vlahovic', 'Milinko', 'Tadicc'], attr: {forca:7, precisao:6, curva:6} },
+    { id: 'tur', name: 'Turquia', nameEn: 'Turkey', colors: ['#e30a17', '#fff'], players: ['Yilmazz', 'Calhano', 'Guler'], attr: {forca:7, precisao:6, curva:7} },
+    { id: 'sco', name: 'Escócia', nameEn: 'Scotland', colors: ['#0055a4', '#fff'], players: ['McTomin', 'Robertso', 'Adams'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'wal', name: 'Gales', nameEn: 'Wales', colors: ['#00b140', '#fff'], players: ['Balezz', 'Ramsey', 'Wilsonn'], attr: {forca:6, precisao:6, curva:6} },
+    // CONCACAF (6-7)
+    { id: 'usa', name: 'EUA', nameEn: 'USA', colors: ['#fff', '#bf0a30'], players: ['Pulisic', 'Weahh', 'Reynaa'], attr: {forca:7, precisao:7, curva:7} },
+    { id: 'mex', name: 'México', nameEn: 'Mexico', colors: ['#006847', '#fff'], players: ['Chucky', 'Jimenez', 'Alvarez'], attr: {forca:7, precisao:7, curva:7} },
+    { id: 'can', name: 'Canadá', nameEn: 'Canada', colors: ['#ff0000', '#fff'], players: ['Davies', 'Davidd', 'Larin'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'crc', name: 'Costa Rica', nameEn: 'Costa Rica', colors: ['#002b7f', '#fff'], players: ['Navass', 'Campbell', 'Borges'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'jam', name: 'Jamaica', nameEn: 'Jamaica', colors: ['#009b3a', '#ffd320'], players: ['Bailey', 'Antonio', 'Nichols'], attr: {forca:6, precisao:5, curva:6} },
+    { id: 'hon', name: 'Honduras', nameEn: 'Honduras', colors: ['#0073cf', '#fff'], players: ['Quioto', 'Lozano', 'Elis'], attr: {forca:5, precisao:5, curva:5} },
+    { id: 'pan', name: 'Panamá', nameEn: 'Panama', colors: ['#da020e', '#0073ce'], players: ['Fajardo', 'Waterma', 'Barcen'], attr: {forca:5, precisao:5, curva:5} },
+    // CAF (9)
+    { id: 'sen', name: 'Senegal', nameEn: 'Senegal', colors: ['#00853f', '#fdef00'], players: ['Mané', 'Sadioo', 'Kouliba'], attr: {forca:7, precisao:6, curva:6} },
+    { id: 'mar', name: 'Marrocos', nameEn: 'Morocco', colors: ['#c1272d', '#006233'], players: ['Ziyech', 'Hakimi', 'Amrabat'], attr: {forca:7, precisao:7, curva:7} },
+    { id: 'tun', name: 'Tunísia', nameEn: 'Tunisia', colors: ['#e70013', '#fff'], players: ['Msakni', 'Khadra', 'Talbi'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'alg', name: 'Argélia', nameEn: 'Algeria', colors: ['#006233', '#fff'], players: ['Mahrez', 'Bennace', 'Atal'], attr: {forca:6, precisao:7, curva:7} },
+    { id: 'egy', name: 'Egito', nameEn: 'Egypt', colors: ['#ce1126', '#fff'], players: ['Salahh', 'ElNenn', 'Trezegu'], attr: {forca:7, precisao:7, curva:7} },
+    { id: 'nga', name: 'Nigéria', nameEn: 'Nigeria', colors: ['#008751', '#fff'], players: ['Osimhen', 'Iwobi', 'Lookman'], attr: {forca:7, precisao:6, curva:6} },
+    { id: 'cmr', name: 'Camarões', nameEn: 'Cameroon', colors: ['#007a5e', '#ce1126'], players: ['Mbeumo', 'Anguiss', 'Onana'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'gha', name: 'Gana', nameEn: 'Ghana', colors: ['#006b3f', '#ffd700'], players: ['Kudus', 'Partey', 'Williams'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'civ', name: 'Costa do Marfim', nameEn: 'Ivory Coast', colors: ['#ff7300', '#fff'], players: ['Haller', 'Zaha', 'Kessie'], attr: {forca:6, precisao:6, curva:6} },
+    // AFC (8)
+    { id: 'jpn', name: 'Japão', nameEn: 'Japan', colors: ['#bc002d', '#fff'], players: ['Kubo', 'Mitoma', 'Endo'], attr: {forca:7, precisao:8, curva:7} },
+    { id: 'kor', name: 'Coreia do Sul', nameEn: 'South Korea', colors: ['#c60c30', '#003478'], players: ['Sonny', 'LeeKang', 'KimMin'], attr: {forca:7, precisao:7, curva:7} },
+    { id: 'aus', name: 'Austrália', nameEn: 'Australia', colors: ['#00843d', '#ffd100'], players: ['Goodwin', 'Irvine', 'Souttar'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'irn', name: 'Irã', nameEn: 'Iran', colors: ['#239f40', '#fff'], players: ['Taremi', 'Azmoun', 'Amiri'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'ksa', name: 'Arábia Saudita', nameEn: 'Saudi Arabia', colors: ['#006c35', '#fff'], players: ['AlDawsa', 'AlShehr', 'AlFaraj'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'qat', name: 'Catar', nameEn: 'Qatar', colors: ['#8d1b3d', '#fff'], players: ['Afif', 'AlMoez', 'Hassan'], attr: {forca:6, precisao:6, curva:6} },
+    { id: 'irq', name: 'Iraque', nameEn: 'Iraq', colors: ['#ce1126', '#000'], players: ['Ali', 'Bayesh', 'Resan'], attr: {forca:5, precisao:5, curva:5} },
+    { id: 'uae', name: 'Emirados', nameEn: 'UAE', colors: ['#00732f', '#fff', '#ff0000'], players: ['Mabkhou', 'AlZaabi', 'AlAtta'], attr: {forca:5, precisao:5, curva:5} },
+    // OFC (1)
+    { id: 'nzl', name: 'Nova Zelândia', nameEn: 'New Zealand', colors: ['#000', '#fff'], players: ['Wood', 'Coster', 'Singh'], attr: {forca:5, precisao:5, curva:5} }
+];
+
+// ==================== ESTADO DO JOGO ====================
+let gameState = {
+    phase: 'title', // title, select, tournament, match, result, champion
+    playerTeam: null,
+    tournament: null,
+    currentMatch: null,
+    matchData: {
+        shots: 0, maxShots: 5,
+        playerGoals: 0, opponentGoals: 0,
+        opponentBase: 0,
+        stamina: 100, maxStamina: 100,
+        humidity: 30 + Math.random() * 50,
+        altitude: 0,
+        wind: { x: 0, z: 0, speed: 0 },
+        isNight: false,
+        isFreeKick: false,
+        barrierCount: 0,
+        extraTime: false,
+        orbCollected: false
+    }
+};
+
+// ==================== THREE.JS SETUP ====================
+let scene, camera, renderer, clock;
+let ball, goalkeeper, kicker, barrierPlayers = [];
+let goalPost, goalNet, field, crowdSprites = [];
+let windParticles = [];
+let orbMesh = null;
+let ballTrail = [];
+let isShooting = false, isReplaying = false;
+let ballVelocity = new THREE.Vector3();
+let ballSpin = new THREE.Vector3();
+let gravity = -9.8;
+let goalLineZ = -40; // distância até o gol
+let goalWidth = 14, goalHeight = 5;
+let shootPower = 0, shootDirection = { x: 0, y: 0 };
+let mouseStart = null, mouseCurrent = null;
+let cameraBasePos = new THREE.Vector3(30, 8, 15);
+let cameraLookAt = new THREE.Vector3(0, 2, -40);
+
+function initThree() {
+    const canvas = document.getElementById('gameCanvas');
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x87CEEB);
+    scene.fog = new THREE.Fog(0x87CEEB, 50, 150);
+
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
+    camera.position.copy(cameraBasePos);
+    camera.lookAt(cameraLookAt);
+
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    clock = new THREE.Clock();
+
+    setupLights();
+    createField();
+    createGoal();
+    createBall();
+    createGoalkeeper();
+    createKicker();
+    createCrowd();
+    createWindParticles();
+
+    window.addEventListener('resize', onWindowResize);
+    setupControls();
+}
+
+function setupLights() {
+    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambient);
+
+    const sun = new THREE.DirectionalLight(0xffffff, 1.0);
+    sun.position.set(50, 80, 30);
+    sun.castShadow = true;
+    sun.shadow.mapSize.width = 2048;
+    sun.shadow.mapSize.height = 2048;
+    sun.shadow.camera.near = 0.5;
+    sun.shadow.camera.far = 200;
+    sun.shadow.camera.left = -50;
+    sun.shadow.camera.right = 50;
+    sun.shadow.camera.top = 50;
+    sun.shadow.camera.bottom = -50;
+    scene.add(sun);
+
+    gameState.sunLight = sun;
+    gameState.ambientLight = ambient;
+}
+
+function setNightMode(isNight) {
+    gameState.matchData.isNight = isNight;
+    if (isNight) {
+        scene.background = new THREE.Color(0x050510);
+        scene.fog.color.set(0x050510);
+        gameState.sunLight.intensity = 0.1;
+        gameState.ambientLight.intensity = 0.2;
+
+        // Floodlights
+        if (!gameState.floodLights) {
+            gameState.floodLights = [];
+            const positions = [[-30, 40, -30], [30, 40, -30], [-30, 40, 30], [30, 40, 30]];
+            positions.forEach(pos => {
+                const light = new THREE.SpotLight(0xffffff, 2.0);
+                light.position.set(pos[0], pos[1], pos[2]);
+                light.target.position.set(0, 0, -20);
+                light.angle = Math.PI / 4;
+                light.penumbra = 0.5;
+                light.castShadow = true;
+                scene.add(light);
+                scene.add(light.target);
+                gameState.floodLights.push(light);
+            });
+        } else {
+            gameState.floodLights.forEach(l => l.intensity = 2.0);
+        }
+    } else {
+        scene.background = new THREE.Color(0x87CEEB);
+        scene.fog.color.set(0x87CEEB);
+        gameState.sunLight.intensity = 1.0;
+        gameState.ambientLight.intensity = 0.6;
+        if (gameState.floodLights) {
+            gameState.floodLights.forEach(l => l.intensity = 0);
+        }
+    }
+}
+
+function createField() {
+    // Grama
+    const fieldGeo = new THREE.PlaneGeometry(120, 80);
+    const fieldMat = new THREE.MeshToonMaterial({ color: 0x2d8a3e });
+    field = new THREE.Mesh(fieldGeo, fieldMat);
+    field.rotation.x = -Math.PI / 2;
+    field.receiveShadow = true;
+    scene.add(field);
+
+    // Linhas do campo (simplificadas)
+    const lineMat = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.8, transparent: true });
+
+    // Linha do gol
+    const goalLine = new THREE.Mesh(new THREE.PlaneGeometry(60, 0.3), lineMat);
+    goalLine.rotation.x = -Math.PI / 2;
+    goalLine.position.set(0, 0.02, goalLineZ);
+    scene.add(goalLine);
+
+    // Área
+    const areaGeo = new THREE.PlaneGeometry(30, 16);
+    const areaMat = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.3, transparent: true });
+    const area = new THREE.Mesh(areaGeo, areaMat);
+    area.rotation.x = -Math.PI / 2;
+    area.position.set(0, 0.03, goalLineZ + 8);
+    scene.add(area);
+
+    // Ponto do pênalti
+    const penaltyDot = new THREE.Mesh(new THREE.CircleGeometry(0.3, 16), lineMat);
+    penaltyDot.rotation.x = -Math.PI / 2;
+    penaltyDot.position.set(0, 0.04, -11);
+    scene.add(penaltyDot);
+
+    // Arco da área
+    const arcGeo = new THREE.RingGeometry(9.15, 9.45, 32, 1, 0, Math.PI);
+    const arc = new THREE.Mesh(arcGeo, lineMat);
+    arc.rotation.x = -Math.PI / 2;
+    arc.position.set(0, 0.04, -11);
+    scene.add(arc);
+
+    // Arquibancadas
+    const standGeo = new THREE.BoxGeometry(100, 15, 20);
+    const standMat = new THREE.MeshToonMaterial({ color: 0x333344 });
+    const stand = new THREE.Mesh(standGeo, standMat);
+    stand.position.set(0, 7.5, goalLineZ - 25);
+    scene.add(stand);
+
+    const stand2 = new THREE.Mesh(standGeo, standMat);
+    stand2.position.set(0, 7.5, 45);
+    scene.add(stand2);
+
+    const standSideGeo = new THREE.BoxGeometry(20, 15, 80);
+    const standLeft = new THREE.Mesh(standSideGeo, standMat);
+    standLeft.position.set(-60, 7.5, 0);
+    scene.add(standLeft);
+
+    const standRight = new THREE.Mesh(standSideGeo, standMat);
+    standRight.position.set(60, 7.5, 0);
+    scene.add(standRight);
+
+    // Placa de altitude
+    const signGeo = new THREE.BoxGeometry(4, 2, 0.2);
+    const signMat = new THREE.MeshToonMaterial({ color: 0x222222 });
+    const sign = new THREE.Mesh(signGeo, signMat);
+    sign.position.set(-25, 3, goalLineZ - 5);
+    sign.rotation.y = 0.3;
+    scene.add(sign);
+
+    // Texto da altitude (canvas texture)
+    const canvas2d = document.createElement('canvas');
+    canvas2d.width = 256; canvas2d.height = 128;
+    const ctx = canvas2d.getContext('2d');
+    ctx.fillStyle = '#222'; ctx.fillRect(0,0,256,128);
+    ctx.fillStyle = '#ffcc00'; ctx.font = 'bold 40px Arial'; ctx.textAlign = 'center';
+    ctx.fillText('ALTITUDE', 128, 45);
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 50px Arial';
+    ctx.fillText('0m', 128, 95);
+    const signTex = new THREE.CanvasTexture(canvas2d);
+    const signFace = new THREE.Mesh(new THREE.PlaneGeometry(3.8, 1.8), new THREE.MeshBasicMaterial({ map: signTex }));
+    signFace.position.set(0, 0, 0.11);
+    sign.add(signFace);
+    gameState.altitudeSignMesh = sign;
+    gameState.altitudeSignCanvas = canvas2d;
+    gameState.altitudeSignCtx = ctx;
+}
+
+function createGoal() {
+    const postMat = new THREE.MeshToonMaterial({ color: 0xffffff });
+    const netMat = new THREE.MeshBasicMaterial({ color: 0xeeeeee, opacity: 0.3, transparent: true, wireframe: true });
+
+    // Postes
+    const postGeo = new THREE.CylinderGeometry(0.15, 0.15, goalHeight);
+    const leftPost = new THREE.Mesh(postGeo, postMat);
+    leftPost.position.set(-goalWidth/2, goalHeight/2, goalLineZ);
+    leftPost.castShadow = true;
+    scene.add(leftPost);
+
+    const rightPost = new THREE.Mesh(postGeo, postMat);
+    rightPost.position.set(goalWidth/2, goalHeight/2, goalLineZ);
+    rightPost.castShadow = true;
+    scene.add(rightPost);
+
+    // Travessão
+    const crossGeo = new THREE.CylinderGeometry(0.15, 0.15, goalWidth);
+    const crossbar = new THREE.Mesh(crossGeo, postMat);
+    crossbar.rotation.z = Math.PI / 2;
+    crossbar.position.set(0, goalHeight, goalLineZ);
+    scene.add(crossbar);
+
+    // Rede
+    const netGeo = new THREE.BoxGeometry(goalWidth, goalHeight, 3);
+    const net = new THREE.Mesh(netGeo, netMat);
+    net.position.set(0, goalHeight/2, goalLineZ - 1.5);
+    scene.add(net);
+
+    goalPost = { left: leftPost, right: rightPost, cross: crossbar, net: net };
+}
+
+function createBall() {
+    const ballGeo = new THREE.SphereGeometry(0.22, 16, 16);
+    const ballMat = new THREE.MeshToonMaterial({ color: 0xffffff });
+    ball = new THREE.Mesh(ballGeo, ballMat);
+    ball.castShadow = true;
+    scene.add(ball);
+    resetBall();
+}
+
+function resetBall() {
+    ball.position.set(0, 0.22, 0);
+    ballVelocity.set(0, 0, 0);
+    ballSpin.set(0, 0, 0);
+    ball.rotation.set(0, 0, 0);
+    ballTrail = [];
+    isShooting = false;
+    isReplaying = false;
+    if (orbMesh) { scene.remove(orbMesh); orbMesh = null; }
+}
+
+function createGoalkeeper() {
+    const gkGroup = new THREE.Group();
+
+    // Corpo
+    const bodyGeo = new THREE.CapsuleGeometry(0.4, 0.8, 4, 8);
+    const bodyMat = new THREE.MeshToonMaterial({ color: 0xff6600 });
+    const body = new THREE.Mesh(bodyGeo, bodyMat);
+    body.position.y = 0.8;
+    gkGroup.add(body);
+
+    // Cabeça
+    const headGeo = new THREE.SphereGeometry(0.25, 8, 8);
+    const headMat = new THREE.MeshToonMaterial({ color: 0xffccaa });
+    const head = new THREE.Mesh(headGeo, headMat);
+    head.position.y = 1.5;
+    gkGroup.add(head);
+
+    // Braços
+    const armGeo = new THREE.CapsuleGeometry(0.12, 0.5, 4, 8);
+    const armMat = new THREE.MeshToonMaterial({ color: 0xff6600 });
+    const leftArm = new THREE.Mesh(armGeo, armMat);
+    leftArm.position.set(-0.5, 1.0, 0);
+    leftArm.rotation.z = 0.3;
+    gkGroup.add(leftArm);
+
+    const rightArm = new THREE.Mesh(armGeo, armMat);
+    rightArm.position.set(0.5, 1.0, 0);
+    rightArm.rotation.z = -0.3;
+    gkGroup.add(rightArm);
+
+    // Pernas
+    const legGeo = new THREE.CapsuleGeometry(0.15, 0.6, 4, 8);
+    const legMat = new THREE.MeshToonMaterial({ color: 0x000000 });
+    const leftLeg = new THREE.Mesh(legGeo, legMat);
+    leftLeg.position.set(-0.2, 0.3, 0);
+    gkGroup.add(leftLeg);
+
+    const rightLeg = new THREE.Mesh(legGeo, legMat);
+    rightLeg.position.set(0.2, 0.3, 0);
+    gkGroup.add(rightLeg);
+
+    // Luvas
+    const gloveGeo = new THREE.SphereGeometry(0.18, 8, 8);
+    const gloveMat = new THREE.MeshToonMaterial({ color: 0x00ff00 });
+    const leftGlove = new THREE.Mesh(gloveGeo, gloveMat);
+    leftGlove.position.set(-0.65, 0.9, 0.2);
+    gkGroup.add(leftGlove);
+
+    const rightGlove = new THREE.Mesh(gloveGeo, gloveMat);
+    rightGlove.position.set(0.65, 0.9, 0.2);
+    gkGroup.add(rightGlove);
+
+    gkGroup.position.set(0, 0, goalLineZ + 1);
+    gkGroup.castShadow = true;
+    scene.add(gkGroup);
+    goalkeeper = gkGroup;
+    goalkeeper.userData = { leftArm, rightArm, leftGlove, rightGlove, body, startPos: new THREE.Vector3(0, 0, goalLineZ + 1) };
+}
+
+function createKicker() {
+    const kGroup = new THREE.Group();
+
+    const bodyGeo = new THREE.CapsuleGeometry(0.35, 0.7, 4, 8);
+    const bodyMat = new THREE.MeshToonMaterial({ color: 0x0066cc });
+    const body = new THREE.Mesh(bodyGeo, bodyMat);
+    body.position.y = 0.75;
+    kGroup.add(body);
+
+    const headGeo = new THREE.SphereGeometry(0.22, 8, 8);
+    const headMat = new THREE.MeshToonMaterial({ color: 0xffccaa });
+    const head = new THREE.Mesh(headGeo, headMat);
+    head.position.y = 1.4;
+    kGroup.add(head);
+
+    const armGeo = new THREE.CapsuleGeometry(0.1, 0.45, 4, 8);
+    const armMat = new THREE.MeshToonMaterial({ color: 0x0066cc });
+    const leftArm = new THREE.Mesh(armGeo, armMat);
+    leftArm.position.set(-0.45, 0.95, 0);
+    kGroup.add(leftArm);
+
+    const rightArm = new THREE.Mesh(armGeo, armMat);
+    rightArm.position.set(0.45, 0.95, 0);
+    kGroup.add(rightArm);
+
+    const legGeo = new THREE.CapsuleGeometry(0.13, 0.55, 4, 8);
+    const legMat = new THREE.MeshToonMaterial({ color: 0x000000 });
+    const leftLeg = new THREE.Mesh(legGeo, legMat);
+    leftLeg.position.set(-0.18, 0.28, 0);
+    kGroup.add(leftLeg);
+
+    const rightLeg = new THREE.Mesh(legGeo, legMat);
+    rightLeg.position.set(0.18, 0.28, 0);
+    kGroup.add(rightLeg);
+
+    kGroup.position.set(0, 0, 2);
+    kGroup.rotation.y = Math.PI;
+    scene.add(kGroup);
+    kicker = kGroup;
+    kicker.userData = { leftArm, rightArm, leftLeg, rightLeg, body, head, startPos: new THREE.Vector3(0, 0, 2) };
+}
+
+function createBarrierPlayer(x) {
+    const bGroup = new THREE.Group();
+    const bodyGeo = new THREE.CapsuleGeometry(0.3, 0.6, 4, 8);
+    const bodyMat = new THREE.MeshToonMaterial({ color: 0xcc0000 });
+    const body = new THREE.Mesh(bodyGeo, bodyMat);
+    body.position.y = 0.65;
+    bGroup.add(body);
+
+    const headGeo = new THREE.SphereGeometry(0.2, 8, 8);
+    const headMat = new THREE.MeshToonMaterial({ color: 0xffccaa });
+    const head = new THREE.Mesh(headGeo, headMat);
+    head.position.y = 1.2;
+    bGroup.add(head);
+
+    const armGeo = new THREE.CapsuleGeometry(0.08, 0.35, 4, 8);
+    const armMat = new THREE.MeshToonMaterial({ color: 0xcc0000 });
+    const leftArm = new THREE.Mesh(armGeo, armMat);
+    leftArm.position.set(-0.35, 0.8, 0);
+    bGroup.add(leftArm);
+
+    const rightArm = new THREE.Mesh(armGeo, armMat);
+    rightArm.position.set(0.35, 0.8, 0);
+    bGroup.add(rightArm);
+
+    const legGeo = new THREE.CapsuleGeometry(0.11, 0.45, 4, 8);
+    const legMat = new THREE.MeshToonMaterial({ color: 0x000000 });
+    const leftLeg = new THREE.Mesh(legGeo, legMat);
+    leftLeg.position.set(-0.15, 0.22, 0);
+    bGroup.add(leftLeg);
+
+    const rightLeg = new THREE.Mesh(legGeo, legMat);
+    rightLeg.position.set(0.15, 0.22, 0);
+    bGroup.add(rightLeg);
+
+    bGroup.position.set(x, 0, goalLineZ + 6);
+    bGroup.userData = { leftArm, rightArm, leftLeg, rightLeg, body, head, startY: 0, isJumping: false, jumpTime: 0 };
+    scene.add(bGroup);
+    return bGroup;
+}
+
+function createCrowd() {
+    // Sprites de torcedores nas arquibancadas
+    const canvas = document.createElement('canvas');
+    canvas.width = 64; canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+
+    function drawCrowdColor(color) {
+        ctx.clearRect(0,0,64,64);
+        ctx.fillStyle = color;
+        for (let i=0; i<40; i++) {
+            const x = Math.random()*64, y = Math.random()*64, r = 2+Math.random()*4;
+            ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+        }
+        return new THREE.CanvasTexture(canvas);
+    }
+
+    gameState.crowdTextures = {};
+
+    const positions = [];
+    for (let x=-45; x<=45; x+=5) {
+        positions.push([x, 12, goalLineZ - 20]);
+        positions.push([x, 12, 38]);
+    }
+    for (let z=-30; z<=30; z+=5) {
+        positions.push([-55, 12, z]);
+        positions.push([55, 12, z]);
+    }
+
+    positions.forEach((pos, i) => {
+        const tex = drawCrowdColor('#ffffff');
+        const mat = new THREE.SpriteMaterial({ map: tex, color: 0xffffff });
+        const sprite = new THREE.Sprite(mat);
+        sprite.position.set(pos[0], pos[1], pos[2]);
+        sprite.scale.set(4, 4, 1);
+        scene.add(sprite);
+        crowdSprites.push(sprite);
+    });
+}
+
+function updateCrowdColor(teamColor) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 64; canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = teamColor;
+    for (let i=0; i<40; i++) {
+        const x = Math.random()*64, y = Math.random()*64, r = 2+Math.random()*4;
+        ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+    }
+    const tex = new THREE.CanvasTexture(canvas);
+    crowdSprites.forEach(sprite => {
+        sprite.material.map = tex;
+        sprite.material.needsUpdate = true;
+    });
+}
+
+function createWindParticles() {
+    const geo = new THREE.BufferGeometry();
+    const count = 100;
+    const positions = new Float32Array(count * 3);
+    for (let i=0; i<count*3; i++) positions[i] = (Math.random()-0.5) * 60;
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.3, opacity: 0.6, transparent: true });
+    const particles = new THREE.Points(geo, mat);
+    scene.add(particles);
+    windParticles = particles;
+}
+
+function updateWindParticles() {
+    if (!windParticles) return;
+    const positions = windParticles.geometry.attributes.position.array;
+    const wind = gameState.matchData.wind;
+    for (let i=0; i<positions.length; i+=3) {
+        positions[i] += wind.x * 0.1;
+        positions[i+1] += Math.random() * 0.1;
+        positions[i+2] += wind.z * 0.1;
+        if (Math.abs(positions[i]) > 30) positions[i] = -Math.sign(positions[i]) * 30;
+        if (Math.abs(positions[i+2]) > 30) positions[i+2] = -Math.sign(positions[i+2]) * 30;
+    }
+    windParticles.geometry.attributes.position.needsUpdate = true;
+}
+
+// ==================== AUDIO ENGINE (Web Audio API) ====================
+const AudioEngine = {
+    ctx: null,
+    masterGain: null,
+    initialized: false,
+    crowdSource: null,
+    crowdGain: null,
+
+    init() {
+        if (this.initialized) return;
+        try {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.value = 0.7;
+            this.masterGain.connect(this.ctx.destination);
+            this.initialized = true;
+        } catch (e) { /* Web Audio not supported */ }
+    },
+
+    resume() {
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+    },
+
+    // --- Kick ---
+    playKick() {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        // Oscillator: sawtooth burst
+        const osc = this.ctx.createOscillator();
+        const oscGain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, t);
+        osc.frequency.exponentialRampToValueAtTime(80, t + 0.15);
+        oscGain.gain.setValueAtTime(0.4, t);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+        osc.connect(oscGain);
+        oscGain.connect(this.masterGain);
+        osc.start(t);
+        osc.stop(t + 0.3);
+
+        // Noise burst
+        const bufferSize = this.ctx.sampleRate * 0.1;
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = noiseBuffer;
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.5, t);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+        noise.connect(noiseGain);
+        noiseGain.connect(this.masterGain);
+        noise.start(t);
+        noise.stop(t + 0.1);
+    },
+
+    // --- Goal ---
+    playGoal() {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        // Sweep oscillator
+        const osc = this.ctx.createOscillator();
+        const oscGain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, t);
+        osc.frequency.exponentialRampToValueAtTime(800, t + 0.4);
+        osc.frequency.exponentialRampToValueAtTime(1200, t + 0.8);
+        oscGain.gain.setValueAtTime(0.5, t);
+        oscGain.gain.setValueAtTime(0.5, t + 0.8);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, t + 1.5);
+        osc.connect(oscGain);
+        oscGain.connect(this.masterGain);
+        osc.start(t);
+        osc.stop(t + 1.5);
+
+        // Harmonics
+        const osc2 = this.ctx.createOscillator();
+        const osc2Gain = this.ctx.createGain();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(600, t);
+        osc2.frequency.exponentialRampToValueAtTime(1600, t + 0.6);
+        osc2Gain.gain.setValueAtTime(0.25, t);
+        osc2Gain.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
+        osc2.connect(osc2Gain);
+        osc2Gain.connect(this.masterGain);
+        osc2.start(t);
+        osc2.stop(t + 1.2);
+
+        // Crowd roar
+        this._playCrowdRoar(2.0);
+    },
+
+    // --- Save/Defend ---
+    playSave() {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        // White noise + bandpass
+        const bufferSize = this.ctx.sampleRate * 0.5;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+        const source = this.ctx.createBufferSource();
+        source.buffer = buffer;
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 2000;
+        filter.Q.value = 1.5;
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.4, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+        source.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain);
+        source.start(t);
+        source.stop(t + 0.5);
+
+        // Thud
+        const osc = this.ctx.createOscillator();
+        const oscGain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(150, t);
+        osc.frequency.exponentialRampToValueAtTime(60, t + 0.2);
+        oscGain.gain.setValueAtTime(0.3, t);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+        osc.connect(oscGain);
+        oscGain.connect(this.masterGain);
+        osc.start(t);
+        osc.stop(t + 0.2);
+    },
+
+    // --- Post hit ---
+    playPost() {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(800, t);
+        osc.frequency.exponentialRampToValueAtTime(400, t + 0.2);
+        gain.gain.setValueAtTime(0.35, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(t);
+        osc.stop(t + 0.2);
+
+        // Metallic ring
+        const ring = this.ctx.createOscillator();
+        const ringGain = this.ctx.createGain();
+        ring.type = 'sine';
+        ring.frequency.value = 1600;
+        ringGain.gain.setValueAtTime(0.15, t);
+        ringGain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+        ring.connect(ringGain);
+        ringGain.connect(this.masterGain);
+        ring.start(t);
+        ring.stop(t + 0.6);
+    },
+
+    // --- Miss ---
+    playMiss() {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        // Descending tone
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(400, t);
+        osc.frequency.exponentialRampToValueAtTime(100, t + 0.4);
+        gain.gain.setValueAtTime(0.25, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(t);
+        osc.stop(t + 0.4);
+
+        // Disappointed crowd
+        this._playCrowdGroan(1.0);
+    },
+
+    // --- Barrier hit ---
+    playBarrier() {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        // Impact thud
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(120, t);
+        osc.frequency.exponentialRampToValueAtTime(40, t + 0.15);
+        gain.gain.setValueAtTime(0.4, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(t);
+        osc.stop(t + 0.15);
+
+        // Body collision noise
+        const bufferSize = this.ctx.sampleRate * 0.08;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+        const source = this.ctx.createBufferSource();
+        source.buffer = buffer;
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.3, t);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+        source.connect(noiseGain);
+        noiseGain.connect(this.masterGain);
+        source.start(t);
+        source.stop(t + 0.08);
+    },
+
+    // --- Orb collected ---
+    playOrb() {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        // Rising sparkle arpeggio
+        [523, 659, 784, 1047].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0, t + i * 0.08);
+            gain.gain.linearRampToValueAtTime(0.25, t + i * 0.08 + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.08 + 0.3);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(t + i * 0.08);
+            osc.stop(t + i * 0.08 + 0.3);
+        });
+    },
+
+    // --- Crowd roar (goal celebration) ---
+    _playCrowdRoar(duration) {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        const oscCount = 6;
+        for (let i = 0; i < oscCount; i++) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = 200 + Math.random() * 400;
+            // Tremolo
+            const lfo = this.ctx.createOscillator();
+            const lfoGain = this.ctx.createGain();
+            lfo.frequency.value = 5 + Math.random() * 10;
+            lfoGain.gain.value = 0.15;
+            lfo.connect(lfoGain);
+            lfoGain.connect(gain.gain);
+            gain.gain.setValueAtTime(0.1, t);
+            gain.gain.linearRampToValueAtTime(0.2, t + 0.2);
+            gain.gain.setValueAtTime(0.2, t + duration - 0.5);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(t);
+            lfo.start(t);
+            osc.stop(t + duration);
+            lfo.stop(t + duration);
+        }
+    },
+
+    // --- Crowd groan (miss/save) ---
+    _playCrowdGroan(duration) {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        for (let i = 0; i < 4; i++) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.value = 120 + Math.random() * 80;
+            gain.gain.setValueAtTime(0.08, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(t);
+            osc.stop(t + duration);
+        }
+    },
+
+    // --- Crowd ambient loop ---
+    startCrowdAmbient() {
+        if (!this.initialized || this.crowdSource) return;
+        const t = this.ctx.currentTime;
+        this.crowdGain = this.ctx.createGain();
+        this.crowdGain.gain.value = 0.06;
+        this.crowdGain.connect(this.masterGain);
+
+        // Create looping noise buffer for crowd
+        const bufferSize = this.ctx.sampleRate * 2;
+        const buffer = this.ctx.createBuffer(2, bufferSize, this.ctx.sampleRate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buffer.getChannelData(ch);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() * 2 - 1) * 0.3;
+            }
+        }
+        this.crowdSource = this.ctx.createBufferSource();
+        this.crowdSource.buffer = buffer;
+        this.crowdSource.loop = true;
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 600;
+        filter.Q.value = 0.5;
+
+        this.crowdSource.connect(filter);
+        filter.connect(this.crowdGain);
+        this.crowdSource.start(t);
+    },
+
+    stopCrowdAmbient() {
+        if (this.crowdSource) {
+            this.crowdSource.stop();
+            this.crowdSource = null;
+        }
+    },
+
+    setCrowdIntensity(intensity) {
+        if (this.crowdGain) {
+            this.crowdGain.gain.linearRampToValueAtTime(intensity, this.ctx.currentTime + 0.3);
+        }
+    },
+
+    // --- Whistle (match start/end) ---
+    playWhistle() {
+        if (!this.initialized) return;
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(2000, t);
+        osc.frequency.setValueAtTime(2500, t + 0.05);
+        osc.frequency.setValueAtTime(2000, t + 0.1);
+        gain.gain.setValueAtTime(0.35, t);
+        gain.gain.setValueAtTime(0.35, t + 0.3);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(t);
+        osc.stop(t + 0.5);
+    }
+};
+
+// ==================== CONTROLES ====================
+function setupControls() {
+    const canvas = document.getElementById('gameCanvas');
+
+    canvas.addEventListener('mousedown', onMouseDown);
+    canvas.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('mouseup', onMouseUp);
+    canvas.addEventListener('touchstart', onTouchStart, {passive:false});
+    canvas.addEventListener('touchmove', onTouchMove, {passive:false});
+    canvas.addEventListener('touchend', onMouseUp);
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
+}
+
+let keys = {};
+let isAiming = false;
+
+function onMouseDown(e) {
+    if (gameState.phase !== 'match' || isShooting || isReplaying) return;
+    isAiming = true;
+    mouseStart = { x: e.clientX, y: e.clientY };
+    mouseCurrent = { x: e.clientX, y: e.clientY };
+    document.getElementById('powerMeter').style.display = 'block';
+}
+
+function onMouseMove(e) {
+    if (!isAiming) return;
+    mouseCurrent = { x: e.clientX, y: e.clientY };
+    updateAimFromMouse();
+}
+
+function onTouchStart(e) {
+    if (gameState.phase !== 'match' || isShooting || isReplaying) return;
+    e.preventDefault();
+    isAiming = true;
+    const t = e.touches[0];
+    mouseStart = { x: t.clientX, y: t.clientY };
+    mouseCurrent = { x: t.clientX, y: t.clientY };
+    document.getElementById('powerMeter').style.display = 'block';
+}
+
+function onTouchMove(e) {
+    if (!isAiming) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    mouseCurrent = { x: t.clientX, y: t.clientY };
+    updateAimFromMouse();
+}
+
+function onMouseUp(e) {
+    if (!isAiming) return;
+    isAiming = false;
+    document.getElementById('powerMeter').style.display = 'none';
+    if (shootPower > 0.1) executeShot();
+    shootPower = 0;
+    shootDirection = { x: 0, y: 0 };
+}
+
+function updateAimFromMouse() {
+    const dx = mouseCurrent.x - mouseStart.x;
+    const dy = mouseCurrent.y - mouseStart.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const maxDist = 200;
+    shootPower = Math.min(dist / maxDist, 1);
+    shootDirection.x = dx / maxDist;
+    shootDirection.y = -dy / maxDist; // invert Y (up is negative in screen)
+
+    document.getElementById('powerFill').style.width = (shootPower * 100) + '%';
+}
+
+function onKeyDown(e) {
+    keys[e.code] = true;
+    if (gameState.phase !== 'match' || isShooting || isReplaying) return;
+
+    if (e.code === 'Space') {
+        if (shootPower === 0) {
+            isAiming = true;
+            shootPower = 0.5;
+            document.getElementById('powerMeter').style.display = 'block';
+        } else {
+            executeShot();
+            isAiming = false;
+            shootPower = 0;
+            document.getElementById('powerMeter').style.display = 'none';
+        }
+    }
+
+    const aimSpeed = 0.02;
+    if (e.code === 'ArrowLeft') shootDirection.x -= aimSpeed;
+    if (e.code === 'ArrowRight') shootDirection.x += aimSpeed;
+    if (e.code === 'ArrowUp') shootDirection.y += aimSpeed;
+    if (e.code === 'ArrowDown') shootDirection.y -= aimSpeed;
+
+    shootDirection.x = Math.max(-1, Math.min(1, shootDirection.x));
+    shootDirection.y = Math.max(-0.5, Math.min(1, shootDirection.y));
+
+    if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.code)) {
+        shootPower = Math.max(shootPower, 0.3);
+        document.getElementById('powerMeter').style.display = 'block';
+        document.getElementById('powerFill').style.width = (shootPower * 100) + '%';
+    }
+}
+
+function onKeyUp(e) {
+    keys[e.code] = false;
+}
+
+// ==================== MECÂNICA DO CHUTE ====================
+function executeShot() {
+    if (isShooting) return;
+    isShooting = true;
+
+    const md = gameState.matchData;
+    const team = gameState.playerTeam;
+    const playerAttr = team.attr;
+
+    // Cansaço reduz força
+    const staminaFactor = md.stamina / md.maxStamina;
+    const basePower = 15 + (playerAttr.forca * 2);
+    const power = basePower * shootPower * staminaFactor;
+
+    // Altitude: bola mais rápida, menos curva
+    const altitudeFactor = 1 + (md.altitude / 5000);
+    const curveFactor = Math.max(0.2, 1 - (md.altitude / 4000));
+
+    // Umidade: mais arrasto
+    const humidityDrag = 1 + (md.humidity / 100);
+
+    // Direção
+    const dirX = shootDirection.x * 10 * (playerAttr.precisao / 10);
+    const dirY = Math.max(0.1, shootDirection.y * 8 * (playerAttr.precisao / 10));
+    const dirZ = -power * altitudeFactor;
+
+    // Curva (Magnus)
+    const curve = (shootDirection.x * 3 * (playerAttr.curva / 10) * curveFactor) / humidityDrag;
+    ballSpin.set(0, curve, 0);
+
+    ballVelocity.set(dirX, dirY, dirZ);
+
+    // SFX: chute
+    AudioEngine.init();
+    AudioEngine.resume();
+    AudioEngine.playKick();
+
+    // Animação do chute
+    animateKick();
+
+    // Goleiro reage
+    setTimeout(() => goalkeeperReact(), 100 + Math.random() * 200);
+
+    // Barreira pula
+    if (md.isFreeKick) {
+        barrierPlayers.forEach((bp, i) => {
+            setTimeout(() => {
+                bp.userData.isJumping = true;
+                bp.userData.jumpTime = 0;
+            }, 200 + Math.random() * 400);
+        });
+    }
+
+    // Cansaço aumenta
+    md.stamina = Math.max(20, md.stamina - 15);
+    updateStaminaUI();
+
+    // Umidade pisca se alta
+    if (md.humidity > 70) {
+        document.getElementById('humidityBar').style.display = 'block';
+        document.getElementById('humidityLabel').style.display = 'block';
+        document.getElementById('humidityBar').classList.add('alert-pulse');
+        setTimeout(() => document.getElementById('humidityBar').classList.remove('alert-pulse'), 2000);
+    }
+
+    // Cansaço pisca se baixo
+    if (md.stamina < 40) {
+        document.getElementById('staminaBar').style.display = 'block';
+        document.getElementById('staminaLabel').style.display = 'block';
+        document.getElementById('staminaBar').classList.add('alert-pulse');
+        setTimeout(() => document.getElementById('staminaBar').classList.remove('alert-pulse'), 2000);
+    }
+}
+
+function animateKick() {
+    const leg = kicker.userData.rightLeg;
+    gsap.to(leg.rotation, { x: -1.5, duration: 0.15, yoyo: true, repeat: 1 });
+    gsap.to(kicker.userData.body.rotation, { x: 0.3, duration: 0.15, yoyo: true, repeat: 1 });
+}
+
+function goalkeeperReact() {
+    const md = gameState.matchData;
+    const gk = goalkeeper;
+    const gkData = gk.userData;
+
+    // Dificuldade por fase
+    const phaseSpeed = {
+        'group': 0.6, 'round16': 0.8, 'quarter': 1.0, 'semi': 1.2, 'final': 1.5
+    };
+    const speed = (phaseSpeed[gameState.tournament.currentPhase] || 0.6) * (0.8 + Math.random() * 0.4);
+
+    // Prever posição da bola no gol
+    const timeToGoal = Math.abs(goalLineZ - ball.position.z) / Math.abs(ballVelocity.z);
+    const predictX = ball.position.x + ballVelocity.x * timeToGoal;
+    const predictY = ball.position.y + ballVelocity.y * timeToGoal + 0.5 * gravity * timeToGoal * timeToGoal;
+
+    const clampedX = Math.max(-goalWidth/2 + 0.5, Math.min(goalWidth/2 - 0.5, predictX));
+    const clampedY = Math.max(0.5, Math.min(goalHeight - 0.3, predictY));
+
+    const dist = Math.abs(clampedX - gk.position.x);
+    const reachTime = dist / (speed * 8);
+
+    gsap.to(gk.position, {
+        x: clampedX,
+        duration: reachTime,
+        ease: "power2.out"
+    });
+
+    // Braços
+    if (predictY > 1.0) {
+        gsap.to(gkData.leftArm.rotation, { z: 2.5, duration: 0.3 });
+        gsap.to(gkData.rightArm.rotation, { z: -2.5, duration: 0.3 });
+    } else {
+        gsap.to(gkData.leftArm.rotation, { z: 0.5, duration: 0.3 });
+        gsap.to(gkData.rightArm.rotation, { z: -0.5, duration: 0.3 });
+    }
+
+    // Pular se bola alta
+    if (predictY > 1.2 && Math.random() < speed * 0.5) {
+        gsap.to(gk.position, { y: 1.5, duration: 0.3, yoyo: true, repeat: 1 });
+    }
+}
+
+// ==================== FÍSICA DA BOLA ====================
+function updateBallPhysics(dt) {
+    if (!isShooting) return;
+
+    const md = gameState.matchData;
+
+    // Gravidade
+    ballVelocity.y += gravity * dt;
+
+    // Arrasto (umidade)
+    const drag = 1 - (0.3 + md.humidity / 200) * dt;
+    ballVelocity.multiplyScalar(drag);
+
+    // Vento
+    ballVelocity.x += md.wind.x * dt * 0.5;
+    ballVelocity.z += md.wind.z * dt * 0.5;
+
+    // Curva (Magnus)
+    ballVelocity.x += ballSpin.y * dt * 2;
+
+    // Altitude: menos curva ao longo do tempo
+    if (md.altitude > 0) {
+        ballSpin.multiplyScalar(1 - (md.altitude / 10000) * dt);
+    }
+
+    // Atualizar posição
+    ball.position.add(ballVelocity.clone().multiplyScalar(dt));
+    ball.rotation.x += ballVelocity.z * dt;
+    ball.rotation.y += ballSpin.y * dt;
+
+    // Rastro
+    ballTrail.push(ball.position.clone());
+    if (ballTrail.length > 50) ballTrail.shift();
+
+    // Colisão com chão
+    if (ball.position.y < 0.22) {
+        ball.position.y = 0.22;
+        ballVelocity.y *= -0.6;
+        ballVelocity.x *= 0.8;
+        ballVelocity.z *= 0.8;
+    }
+
+    // Colisão com barreira
+    if (md.isFreeKick) {
+        barrierPlayers.forEach(bp => {
+            const dx = ball.position.x - bp.position.x;
+            const dy = ball.position.y - (bp.position.y + 0.8);
+            const dz = ball.position.z - bp.position.z;
+            const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+            if (dist < 0.6) {
+                ballVelocity.x += dx * 5;
+                ballVelocity.y = Math.abs(ballVelocity.y) * 0.5 + 2;
+                ballVelocity.z *= 0.5;
+                AudioEngine.playBarrier();
+                showNarration(currentLang === 'pt' ? 'NA BARRERA!' : 'HIT BARRIER!', '#ff6600');
+            }
+        });
+    }
+
+    // Colisão com goleiro
+    const gk = goalkeeper;
+    const gkDx = ball.position.x - gk.position.x;
+    const gkDy = ball.position.y - (gk.position.y + 1.0);
+    const gkDz = ball.position.z - gk.position.z;
+    const gkDist = Math.sqrt(gkDx*gkDx + gkDy*gkDy + gkDz*gkDz);
+    if (gkDist < 0.8 && ball.position.z < gk.position.z + 0.5 && ball.position.z > gk.position.z - 0.5) {
+        // Defesa!
+        ballVelocity.set(gkDx * 3, Math.abs(ballVelocity.y) * 0.3 + 2, Math.abs(ballVelocity.z) * 0.5);
+        AudioEngine.playSave();
+        showNarration(t('saved'), '#00d4ff');
+        md.opponentGoals++;
+        endShot('saved');
+        return;
+    }
+
+    // Colisão com traves
+    if (ball.position.z <= goalLineZ + 0.5 && ball.position.z >= goalLineZ - 1) {
+        if (Math.abs(ball.position.x - goalWidth/2) < 0.3 || Math.abs(ball.position.x + goalWidth/2) < 0.3) {
+            if (ball.position.y < goalHeight) {
+                ballVelocity.x *= -0.5;
+                AudioEngine.playPost();
+                showNarration(t('post'), '#ffcc00');
+                md.opponentGoals++;
+                endShot('post');
+                return;
+            }
+        }
+        if (ball.position.y >= goalHeight - 0.2 && ball.position.y <= goalHeight + 0.2 && Math.abs(ball.position.x) <= goalWidth/2) {
+            ballVelocity.y *= -0.5;
+            AudioEngine.playPost();
+            showNarration(t('post'), '#ffcc00');
+            md.opponentGoals++;
+            endShot('post');
+            return;
+        }
+    }
+
+    // Gol!
+    if (ball.position.z <= goalLineZ && Math.abs(ball.position.x) < goalWidth/2 && ball.position.y < goalHeight && ball.position.y > 0) {
+        AudioEngine.playGoal();
+        showNarration(t('goal'), '#ffcc00');
+        md.playerGoals++;
+        celebrateGoal();
+        endShot('goal');
+        return;
+    }
+
+    // Fora
+    if (ball.position.z < goalLineZ - 5 || Math.abs(ball.position.x) > 30 || ball.position.z > 10) {
+        AudioEngine.playMiss();
+        showNarration(t('miss'), '#ff0066');
+        md.opponentGoals++;
+        endShot('miss');
+        return;
+    }
+
+    // Orbe de energia
+    if (orbMesh) {
+        const odx = ball.position.x - orbMesh.position.x;
+        const ody = ball.position.y - orbMesh.position.y;
+        const odz = ball.position.z - orbMesh.position.z;
+        const oDist = Math.sqrt(odx*odx + ody*ody + odz*odz);
+        if (oDist < 0.8) {
+            md.stamina = Math.min(md.maxStamina, md.stamina + 25);
+            updateStaminaUI();
+            scene.remove(orbMesh);
+            orbMesh = null;
+            md.orbCollected = true;
+            AudioEngine.playOrb();
+            showNarration(currentLang === 'pt' ? 'ENERGIA!' : 'ENERGY!', '#ffcc00');
+        }
+    }
+}
+
+function celebrateGoal() {
+    // SFX: crowd intensity boost
+    AudioEngine.setCrowdIntensity(0.25);
+    setTimeout(() => AudioEngine.setCrowdIntensity(0.06), 3000);
+
+    // Jogador comemora
+    gsap.to(kicker.position, { y: 1.5, duration: 0.3, yoyo: true, repeat: 3 });
+    gsap.to(kicker.userData.leftArm.rotation, { z: 2.5, duration: 0.3, delay: 0.1 });
+    gsap.to(kicker.userData.rightArm.rotation, { z: -2.5, duration: 0.3, delay: 0.1 });
+
+    // Torcida pulando
+    crowdSprites.forEach((sprite, i) => {
+        gsap.to(sprite.position, { y: 14, duration: 0.2, delay: i * 0.01, yoyo: true, repeat: 3 });
+    });
+}
+
+function endShot(result) {
+    isShooting = false;
+
+    // Replay em câmera lenta
+    isReplaying = true;
+    const replayDuration = 2.0;
+
+    // Câmera segue a bola
+    gsap.to(camera.position, {
+        x: ball.position.x * 0.5 + 10,
+        y: Math.max(3, ball.position.y + 2),
+        z: ball.position.z + 15,
+        duration: replayDuration,
+        ease: "power1.inOut"
+    });
+
+    setTimeout(() => {
+        isReplaying = false;
+        resetPositions();
+        nextShot();
+    }, replayDuration * 1000 + 500);
+}
+
+function resetPositions() {
+    resetBall();
+    goalkeeper.position.copy(goalkeeper.userData.startPos);
+    goalkeeper.rotation.set(0,0,0);
+    goalkeeper.userData.leftArm.rotation.set(0,0,0.3);
+    goalkeeper.userData.rightArm.rotation.set(0,0,-0.3);
+
+    kicker.position.copy(kicker.userData.startPos);
+    kicker.rotation.set(0, Math.PI, 0);
+    kicker.userData.leftArm.rotation.set(0,0,0);
+    kicker.userData.rightArm.rotation.set(0,0,0);
+    kicker.userData.leftLeg.rotation.set(0,0,0);
+    kicker.userData.rightLeg.rotation.set(0,0,0);
+
+    barrierPlayers.forEach(bp => {
+        bp.position.y = 0;
+        bp.userData.isJumping = false;
+    });
+
+    camera.position.copy(cameraBasePos);
+    camera.lookAt(cameraLookAt);
+}
+
+function nextShot() {
+    const md = gameState.matchData;
+    md.shots++;
+
+    if (md.shots >= md.maxShots && !md.extraTime) {
+        // Verificar empate
+        if (md.playerGoals === md.opponentGoals) {
+            md.extraTime = true;
+            md.maxShots = 6;
+            showNarration(t('extraTime'), '#ff0066');
+            setTimeout(() => showNarration(t('goldenGoal'), '#ffcc00'), 2000);
+            updateShotUI();
+            setupShot();
+            return;
+        }
+        endMatch();
+        return;
+    }
+
+    if (md.extraTime && md.shots >= 6) {
+        // Gol de ouro não aconteceu = sorteio? Ou derrota?
+        // Se chegou na 6a e ninguém fez, considera derrota por não fazer o gol de ouro
+        endMatch();
+        return;
+    }
+
+    updateShotUI();
+    setupShot();
+}
+
+function setupShot() {
+    const md = gameState.matchData;
+    md.isFreeKick = Math.random() < 0.4; // 40% faltas
+
+    if (md.isFreeKick) {
+        // Posição aleatória de falta
+        const angle = (Math.random() - 0.5) * Math.PI * 0.6;
+        const dist = 20 + Math.random() * 15;
+        ball.position.set(Math.sin(angle) * dist, 0.22, Math.cos(angle) * dist - 5);
+        kicker.position.set(ball.position.x - 1, 0, ball.position.z + 2);
+        kicker.lookAt(ball.position.x, 0, ball.position.z);
+
+        // Barreira
+        barrierPlayers.forEach(bp => scene.remove(bp));
+        barrierPlayers = [];
+        md.barrierCount = 2 + Math.floor(Math.random() * 3); // 2-4
+        const barrierZ = goalLineZ + 6.5;
+        const barrierXStart = -((md.barrierCount - 1) * 0.6) / 2;
+        for (let i = 0; i < md.barrierCount; i++) {
+            const bp = createBarrierPlayer(barrierXStart + i * 0.6);
+            bp.position.z = barrierZ;
+            barrierPlayers.push(bp);
+        }
+    } else {
+        // Pênalti
+        ball.position.set(0, 0.22, -11);
+        kicker.position.set(0, 0, 2);
+        kicker.rotation.set(0, Math.PI, 0);
+
+        barrierPlayers.forEach(bp => scene.remove(bp));
+        barrierPlayers = [];
+    }
+
+    // Orbe de energia (posição desafiadora)
+    if (orbMesh) scene.remove(orbMesh);
+    if (Math.random() < 0.6 && md.stamina < 70) {
+        const orbGeo = new THREE.SphereGeometry(0.3, 8, 8);
+        const orbMat = new THREE.MeshBasicMaterial({ color: 0xffcc00, transparent: true, opacity: 0.9 });
+        orbMesh = new THREE.Mesh(orbGeo, orbMat);
+        // Posição em paralela desafiadora
+        const side = Math.random() < 0.5 ? -1 : 1;
+        orbMesh.position.set(side * (2 + Math.random() * 3), 1 + Math.random() * 2, goalLineZ + 3 + Math.random() * 5);
+        scene.add(orbMesh);
+
+        // Animação do orbe
+        gsap.to(orbMesh.position, { y: orbMesh.position.y + 0.5, duration: 1, yoyo: true, repeat: -1, ease: "sine.inOut" });
+        gsap.to(orbMesh.scale, { x: 1.3, y: 1.3, z: 1.3, duration: 0.5, yoyo: true, repeat: -1 });
+    }
+
+    updateShotUI();
+}
+
+// ==================== UI UPDATES ====================
+function updateShotUI() {
+    const md = gameState.matchData;
+    const shotType = md.isFreeKick ? t('freekick') : t('penalty');
+    document.getElementById('shotType').textContent = shotType;
+    document.getElementById('shotNumber').textContent = `${t('shot')} ${md.shots + 1}/${md.maxShots}`;
+    document.getElementById('scoreHome').textContent = md.playerGoals;
+    document.getElementById('scoreAway').textContent = md.opponentGoals;
+}
+
+function updateStaminaUI() {
+    const md = gameState.matchData;
+    const fill = document.getElementById('staminaFill');
+    fill.style.width = md.stamina + '%';
+    fill.style.background = md.stamina > 50 ? '#00ff88' : md.stamina > 25 ? '#ffcc00' : '#ff0066';
+}
+
+function showNarration(text, color) {
+    const el = document.getElementById('narration');
+    el.textContent = text;
+    el.style.color = color || '#ffcc00';
+    el.classList.add('show');
+
+    // TTS
+    if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = currentLang === 'pt' ? 'pt-BR' : 'en-US';
+        utter.rate = 1.2;
+        utter.pitch = 1.1;
+        speechSynthesis.speak(utter);
+    }
+
+    setTimeout(() => el.classList.remove('show'), 1500);
+}
+
+// ==================== TORNEIO ====================
+function generateTournament() {
+    const teams = [...TEAMS].sort(() => Math.random() - 0.5);
+    const groups = [];
+    for (let i = 0; i < 12; i++) {
+        groups.push({
+            name: String.fromCharCode(65 + i),
+            teams: teams.slice(i * 4, i * 4 + 4).map(t => ({ ...t, points: 0, gf: 0, ga: 0, wins: 0, draws: 0, losses: 0 }))
+        });
+    }
+
+    return {
+        phase: 'group',
+        currentPhase: 'group',
+        groups: groups,
+        groupMatches: [],
+        knockout: [],
+        playerGroup: null,
+        playerRank: 0,
+        round: 0
+    };
+}
+
+function findPlayerGroup(tournament, teamId) {
+    return tournament.groups.find(g => g.teams.some(t => t.id === teamId));
+}
+
+function getTeamName(team) {
+    return currentLang === 'pt' ? team.name : team.nameEn;
+}
+
+function goToTeamSelect() {
+    document.getElementById('screenTitle').classList.add('hidden');
+    document.getElementById('screenTeams').classList.remove('hidden');
+    renderTeamSelect();
+}
+
+function renderTeamSelect() {
+    const grid = document.getElementById('teamsGrid');
+    grid.innerHTML = '';
+    TEAMS.forEach(team => {
+        const card = document.createElement('div');
+        card.className = 'team-card';
+        card.dataset.id = team.id;
+        card.innerHTML = `
+            <div class="team-color" style="background: linear-gradient(135deg, ${team.colors[0]}, ${team.colors[1] || team.colors[0]});"></div>
+            <div class="team-name">${getTeamName(team)}</div>
+            <div class="team-players">${team.players.join(', ')}</div>
+            <div style="font-size:10px;color:#aaa;margin-top:4px;">F:${team.attr.forca} P:${team.attr.precisao} C:${team.attr.curva}</div>
+        `;
+        card.onclick = () => selectTeam(team.id);
+        grid.appendChild(card);
+    });
+}
+
+function selectTeam(id) {
+    document.querySelectorAll('.team-card').forEach(c => c.classList.remove('selected'));
+    document.querySelector(`.team-card[data-id="${id}"]`).classList.add('selected');
+    gameState.playerTeam = TEAMS.find(t => t.id === id);
+}
+
+function confirmTeam() {
+    if (!gameState.playerTeam) return;
+    gameState.tournament = generateTournament();
+    gameState.tournament.playerGroup = findPlayerGroup(gameState.tournament, gameState.playerTeam.id);
+    gameState.tournament.playerTeamId = gameState.playerTeam.id;
+
+    document.getElementById('screenTeams').classList.add('hidden');
+    showTournamentScreen();
+}
+
+function showTournamentScreen() {
+    const screen = document.getElementById('screenTournament');
+    screen.classList.remove('hidden');
+    renderTournament();
+}
+
+function renderTournament() {
+    const tournament = gameState.tournament;
+    const content = document.getElementById('tournamentContent');
+    content.innerHTML = '';
+
+    if (tournament.currentPhase === 'group') {
+        document.getElementById('tournamentTitle').textContent = t('groupStage');
+
+        // Mostrar grupo do jogador
+        const pg = tournament.playerGroup;
+        const table = document.createElement('table');
+        table.className = 'group-table';
+        table.innerHTML = `
+            <tr><th>${pg.name}</th><th>P</th><th>V</th><th>E</th><th>D</th><th>GP</th><th>GC</th><th>SG</th></tr>
+            ${pg.teams.map(tm => {
+                const isPlayer = tm.id === gameState.playerTeam.id;
+                return `<tr class="${isPlayer ? 'highlight' : ''}">
+                    <td>${getTeamName(tm)}</td>
+                    <td>${tm.points}</td>
+                    <td>${tm.wins}</td>
+                    <td>${tm.draws}</td>
+                    <td>${tm.losses}</td>
+                    <td>${tm.gf}</td>
+                    <td>${tm.ga}</td>
+                    <td>${tm.gf - tm.ga}</td>
+                </tr>`;
+            }).join('')}
+        `;
+        content.appendChild(table);
+
+        const roundInfo = document.createElement('div');
+        roundInfo.style.cssText = 'text-align:center;margin:10px;color:#ffcc00;';
+        roundInfo.textContent = `${t('round')} ${tournament.round + 1}/3`;
+        content.appendChild(roundInfo);
+    } else {
+        // Mata-mata
+        const phaseNames = { round16: t('roundOf16'), quarter: t('quarter'), semi: t('semi'), final: t('final') };
+        document.getElementById('tournamentTitle').textContent = phaseNames[tournament.currentPhase] || tournament.currentPhase;
+
+        const bracket = document.createElement('div');
+        bracket.className = 'bracket-container';
+
+        tournament.knockout.forEach((match, i) => {
+            const div = document.createElement('div');
+            div.className = `bracket-match ${match.active ? 'active' : ''} ${match.finished ? 'finished' : ''}`;
+            const homeName = match.home ? getTeamName(match.home) : '???';
+            const awayName = match.away ? getTeamName(match.away) : '???';
+            const result = match.finished ? `${match.homeGoals}x${match.awayGoals}` : 'vs';
+            div.innerHTML = `
+                <span>${homeName}</span>
+                <span class="match-result">${result}</span>
+                <span>${awayName}</span>
+            `;
+            bracket.appendChild(div);
+        });
+        content.appendChild(bracket);
+    }
+
+    // Botão próxima partida
+    const btn = document.getElementById('btnNextMatch');
+    const nextMatch = getNextMatch();
+    if (nextMatch) {
+        btn.style.display = 'block';
+        btn.textContent = `${t('nextMatch')}: ${getTeamName(nextMatch.opponent)}`;
+    } else {
+        btn.style.display = 'none';
+    }
+}
+
+function getNextMatch() {
+    const t = gameState.tournament;
+    if (t.currentPhase === 'group') {
+        const pg = t.playerGroup;
+        const opponents = pg.teams.filter(tm => tm.id !== gameState.playerTeam.id);
+        if (t.round < opponents.length) {
+            return { opponent: opponents[t.round], phase: 'group', round: t.round };
+        }
+        return null;
+    } else {
+        const match = t.knockout.find(m => m.active && !m.finished && (m.home.id === gameState.playerTeam.id || m.away.id === gameState.playerTeam.id));
+        if (match) {
+            return { opponent: match.home.id === gameState.playerTeam.id ? match.away : match.home, phase: t.currentPhase, match: match };
+        }
+        return null;
+    }
+}
+
+function startNextMatch() {
+    const next = getNextMatch();
+    if (!next) {
+        advancePhase();
+        return;
+    }
+
+    // Setup match
+    const md = gameState.matchData;
+    md.shots = 0;
+    md.maxShots = 5;
+    md.playerGoals = 0;
+    md.opponentGoals = 0;
+    md.stamina = 100;
+    md.humidity = 30 + Math.random() * 50;
+    md.wind = { x: (Math.random()-0.5)*10, z: (Math.random()-0.5)*5, speed: Math.random()*20 };
+    md.isNight = Math.random() < 0.5;
+    md.extraTime = false;
+    md.orbCollected = false;
+
+    // Altitude aleatória (0 a 3000m, com chance de estádio alto no México)
+    md.altitude = Math.random() < 0.3 ? 1500 + Math.random() * 1500 : Math.random() * 500;
+
+    // Gols base do adversário (simulado)
+    const opponentStrength = next.opponent.attr.forca;
+    md.opponentBase = Math.floor(Math.random() * (opponentStrength / 3));
+
+    setNightMode(md.isNight);
+    updateCrowdColor(gameState.playerTeam.colors[0]);
+
+    // Update altitude sign
+    const sign = document.getElementById('altitudeSign');
+    sign.style.display = md.altitude > 1000 ? 'block' : 'none';
+    document.getElementById('altitudeValue').textContent = Math.round(md.altitude) + 'm';
+    if (gameState.altitudeSignCtx) {
+        gameState.altitudeSignCtx.clearRect(0,0,256,128);
+        gameState.altitudeSignCtx.fillStyle = '#222'; gameState.altitudeSignCtx.fillRect(0,0,256,128);
+        gameState.altitudeSignCtx.fillStyle = '#ffcc00'; gameState.altitudeSignCtx.font = 'bold 40px Arial'; gameState.altitudeSignCtx.textAlign = 'center';
+        gameState.altitudeSignCtx.fillText('ALTITUDE', 128, 45);
+        gameState.altitudeSignCtx.fillStyle = '#fff'; gameState.altitudeSignCtx.font = 'bold 50px Arial';
+        gameState.altitudeSignCtx.fillText(Math.round(md.altitude) + 'm', 128, 95);
+        gameState.altitudeSignMesh.children[0].material.map.needsUpdate = true;
+    }
+
+    // Update HUD
+    document.getElementById('nameHome').textContent = getTeamName(gameState.playerTeam);
+    document.getElementById('nameAway').textContent = getTeamName(next.opponent);
+    document.getElementById('flagHome').style.background = `linear-gradient(135deg, ${gameState.playerTeam.colors[0]}, ${gameState.playerTeam.colors[1] || gameState.playerTeam.colors[0]})`;
+    document.getElementById('flagAway').style.background = `linear-gradient(135deg, ${next.opponent.colors[0]}, ${next.opponent.colors[1] || next.opponent.colors[0]})`;
+    const phaseKey = gameState.tournament.currentPhase === 'group' ? 'groupStage' : gameState.tournament.currentPhase;
+    document.getElementById('matchPhase').textContent = t(phaseKey);
+    document.getElementById('matchRound').textContent = gameState.tournament.currentPhase === 'group' ? `${t('round')} ${gameState.tournament.round + 1}/3` : '';
+
+    // Vento
+    const windAngle = Math.atan2(md.wind.x, md.wind.z) * 180 / Math.PI;
+    document.getElementById('windArrow').style.transform = `rotate(${-windAngle}deg)`;
+    document.getElementById('windSpeed').textContent = Math.round(md.wind.speed) + ' km/h';
+
+    // Humidity bar
+    document.getElementById('humidityFill').style.width = md.humidity + '%';
+    document.getElementById('humidityBar').style.display = 'none';
+    document.getElementById('humidityLabel').style.display = 'none';
+
+    // Stamina bar
+    updateStaminaUI();
+    document.getElementById('staminaBar').style.display = 'none';
+    document.getElementById('staminaLabel').style.display = 'none';
+
+    document.getElementById('hudLayer').style.display = 'block';
+    document.getElementById('screenTournament').classList.add('hidden');
+
+    gameState.currentMatch = next;
+    gameState.phase = 'match';
+
+    // SFX: whistle + crowd
+    AudioEngine.init();
+    AudioEngine.resume();
+    AudioEngine.playWhistle();
+    AudioEngine.startCrowdAmbient();
+
+    resetPositions();
+    setupShot();
+}
+
+function endMatch() {
+    const md = gameState.matchData;
+    const tournament = gameState.tournament;
+    const match = gameState.currentMatch;
+
+    gameState.phase = 'result';
+    document.getElementById('hudLayer').style.display = 'none';
+
+    // SFX: whistle + stop crowd
+    AudioEngine.playWhistle();
+    AudioEngine.stopCrowdAmbient();
+
+    const screen = document.getElementById('screenMatchResult');
+    screen.classList.remove('hidden');
+
+    const isWin = md.playerGoals > md.opponentGoals;
+    const isDraw = md.playerGoals === md.opponentGoals;
+
+    document.getElementById('resultTitle').textContent = isWin ? t('win') : isDraw ? t('draw') : t('lose');
+    document.getElementById('resultTitle').style.color = isWin ? '#00ff88' : isDraw ? '#ffcc00' : '#ff0066';
+    document.getElementById('resultScore').textContent = `${md.playerGoals} x ${md.opponentGoals}`;
+
+    let detail = '';
+    if (tournament.currentPhase === 'group') {
+        const pg = tournament.playerGroup;
+        const playerTeam = pg.teams.find(tm => tm.id === gameState.playerTeam.id);
+        const opponentTeam = pg.teams.find(tm => tm.id === match.opponent.id);
+
+        if (isWin) {
+            playerTeam.points += 3; playerTeam.wins++; playerTeam.gf += md.playerGoals; playerTeam.ga += md.opponentGoals;
+            opponentTeam.losses++; opponentTeam.gf += md.opponentGoals; opponentTeam.ga += md.playerGoals;
+            detail = '+3 pontos!';
+        } else if (isDraw) {
+            playerTeam.points += 1; playerTeam.draws++; playerTeam.gf += md.playerGoals; playerTeam.ga += md.opponentGoals;
+            opponentTeam.points += 1; opponentTeam.draws++; opponentTeam.gf += md.opponentGoals; opponentTeam.ga += md.playerGoals;
+            detail = '+1 ponto';
+        } else {
+            playerTeam.losses++; playerTeam.gf += md.playerGoals; playerTeam.ga += md.opponentGoals;
+            opponentTeam.points += 3; opponentTeam.wins++; opponentTeam.gf += md.opponentGoals; opponentTeam.ga += md.playerGoals;
+            detail = '0 pontos';
+        }
+        tournament.round++;
+    } else {
+        // Mata-mata
+        const koMatch = tournament.knockout.find(m => m.active && !m.finished && (m.home.id === gameState.playerTeam.id || m.away.id === gameState.playerTeam.id));
+        if (koMatch) {
+            koMatch.finished = true;
+            if (koMatch.home.id === gameState.playerTeam.id) {
+                koMatch.homeGoals = md.playerGoals;
+                koMatch.awayGoals = md.opponentGoals;
+            } else {
+                koMatch.awayGoals = md.playerGoals;
+                koMatch.homeGoals = md.opponentGoals;
+            }
+        }
+        if (!isWin) {
+            detail = currentLang === 'pt' ? 'Eliminado!' : 'Eliminated!';
+        }
+    }
+
+    document.getElementById('resultDetail').textContent = detail;
+
+    saveGame();
+}
+
+function continueTournament() {
+    document.getElementById('screenMatchResult').classList.add('hidden');
+
+    const t = gameState.tournament;
+    const md = gameState.matchData;
+
+    if (t.currentPhase === 'group') {
+        if (t.round >= 3) {
+            // Fim da fase de grupos
+            advancePhase();
+        } else {
+            showTournamentScreen();
+        }
+    } else {
+        const koMatch = t.knockout.find(m => m.active && !m.finished && (m.home.id === gameState.playerTeam.id || m.away.id === gameState.playerTeam.id));
+        if (koMatch && md.playerGoals > md.opponentGoals) {
+            // Avançou
+            advancePhase();
+        } else if (koMatch && md.playerGoals <= md.opponentGoals) {
+            // Eliminado
+            resetGame();
+        } else {
+            showTournamentScreen();
+        }
+    }
+}
+
+function advancePhase() {
+    const t = gameState.tournament;
+
+    if (t.currentPhase === 'group') {
+        // Classificar 32 melhores (2 primeiros de cada grupo + 8 melhores 3º)
+        let allTeams = [];
+        t.groups.forEach(g => {
+            g.teams.sort((a, b) => b.points - a.points || (b.gf - b.ga) - (a.gf - a.ga));
+            allTeams.push({ team: g.teams[0], rank: 1, group: g.name });
+            allTeams.push({ team: g.teams[1], rank: 2, group: g.name });
+            allTeams.push({ team: g.teams[2], rank: 3, group: g.name });
+        });
+
+        const thirdPlaces = allTeams.filter(t => t.rank === 3).sort((a, b) => b.team.points - a.team.points || (b.team.gf - b.team.ga) - (a.team.gf - a.team.ga));
+        const bestThirds = thirdPlaces.slice(0, 8);
+
+        const qualified = [
+            ...allTeams.filter(t => t.rank === 1),
+            ...allTeams.filter(t => t.rank === 2),
+            ...bestThirds
+        ].map(t => t.team);
+
+        // Verificar se jogador classificou
+        if (!qualified.some(q => q.id === gameState.playerTeam.id)) {
+            alert(currentLang === 'pt' ? 'Você não se classificou!' : 'You did not qualify!');
+            resetGame();
+            return;
+        }
+
+        // Gerar oitavas (simplificado: 16 classificados, mas temos 32... vou fazer 16 para simplificar o protótipo)
+        // Na verdade, na Copa 2026 são 32 nas oitavas. Para o protótipo, vou fazer 16 para não ficar gigante.
+        // Ou melhor, vou fazer 16 mas mostrar que é "Round of 16" e o jogador joga 1 partida por fase.
+
+        // Simplificação: o jogador sempre avança e enfrenta um adversário aleatório qualificado
+        t.currentPhase = 'round16';
+        t.knockout = generateKnockout(qualified, 16);
+    } else if (t.currentPhase === 'round16') {
+        t.currentPhase = 'quarter';
+        t.knockout = generateKnockout([gameState.playerTeam, ...getRandomOpponents(7)], 8);
+    } else if (t.currentPhase === 'quarter') {
+        t.currentPhase = 'semi';
+        t.knockout = generateKnockout([gameState.playerTeam, ...getRandomOpponents(3)], 4);
+    } else if (t.currentPhase === 'semi') {
+        t.currentPhase = 'final';
+        t.knockout = generateKnockout([gameState.playerTeam, ...getRandomOpponents(1)], 2);
+    } else if (t.currentPhase === 'final') {
+        showChampion();
+        return;
+    }
+
+    showTournamentScreen();
+}
+
+function generateKnockout(teams, count) {
+    const matches = [];
+    const shuffled = teams.sort(() => Math.random() - 0.5);
+    for (let i = 0; i < count / 2; i++) {
+        matches.push({
+            home: shuffled[i * 2],
+            away: shuffled[i * 2 + 1] || shuffled[0],
+            homeGoals: 0, awayGoals: 0,
+            finished: false,
+            active: shuffled[i*2].id === gameState.playerTeam.id || shuffled[i*2+1]?.id === gameState.playerTeam.id
+        });
+    }
+    // Garantir que o jogador esteja em uma partida ativa
+    const playerMatch = matches.find(m => m.home.id === gameState.playerTeam.id || m.away.id === gameState.playerTeam.id);
+    if (playerMatch) {
+        matches.forEach(m => m.active = false);
+        playerMatch.active = true;
+    }
+    return matches;
+}
+
+function getRandomOpponents(count) {
+    const others = TEAMS.filter(t => t.id !== gameState.playerTeam.id);
+    return others.sort(() => Math.random() - 0.5).slice(0, count);
+}
+
+function showChampion() {
+    document.getElementById('screenTournament').classList.add('hidden');
+    document.getElementById('screenChampion').classList.remove('hidden');
+    document.getElementById('championTeam').textContent = getTeamName(gameState.playerTeam);
+    showNarration(currentLang === 'pt' ? 'CAMPEÃO DO MUNDO!' : 'WORLD CHAMPION!', '#ffcc00');
+    clearSave();
+}
+
+// ==================== SAVE SYSTEM (IndexedDB) ====================
+const DB_NAME = 'WC2026DB';
+const DB_VERSION = 1;
+let db = null;
+
+function initDB() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onerror = () => reject(req.error);
+        req.onsuccess = () => { db = req.result; resolve(db); };
+        req.onupgradeneeded = (e) => {
+            const database = e.target.result;
+            database.createObjectStore('saves', { keyPath: 'id' });
+        };
+    });
+}
+
+async function saveGame() {
+    if (!db) await initDB();
+    const tx = db.transaction('saves', 'readwrite');
+    const store = tx.objectStore('saves');
+    store.put({ id: 'main', state: JSON.stringify(gameState), date: new Date().toISOString() });
+}
+
+async function loadGame() {
+    if (!db) await initDB();
+    const tx = db.transaction('saves', 'readonly');
+    const store = tx.objectStore('saves');
+    const req = store.get('main');
+    req.onsuccess = () => {
+        if (req.result) {
+            const saved = JSON.parse(req.result.state);
+            gameState = saved;
+            document.getElementById('screenTitle').classList.add('hidden');
+            showTournamentScreen();
+        }
+    };
+}
+
+async function clearSave() {
+    if (!db) await initDB();
+    const tx = db.transaction('saves', 'readwrite');
+    const store = tx.objectStore('saves');
+    store.delete('main');
+}
+
+function saveAndQuit() {
+    saveGame().then(() => {
+        document.getElementById('screenTournament').classList.add('hidden');
+        document.getElementById('screenTitle').classList.remove('hidden');
+        checkContinue();
+    });
+}
+
+function checkContinue() {
+    if (!db) initDB().then(() => {
+        const tx = db.transaction('saves', 'readonly');
+        const store = tx.objectStore('saves');
+        const req = store.get('main');
+        req.onsuccess = () => {
+            document.getElementById('btnContinue').style.display = req.result ? 'block' : 'none';
+        };
+    });
+}
+
+// ==================== NAVIGATION ====================
+function backToTitle() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById('screenTitle').classList.remove('hidden');
+    checkContinue();
+}
+
+// ==================== ACCESSIBILITY ====================
+let currentA11yMode = 'none';
+
+function setA11yMode(mode) {
+    document.body.classList.remove('cb-protanopia', 'cb-deuteranopia', 'cb-tritanopia', 'high-contrast');
+    if (mode !== 'none') document.body.classList.add(mode);
+    currentA11yMode = mode;
+    // Update menu active state
+    document.querySelectorAll('#a11yMenu button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const modes = { 'none': 0, 'cb-protanopia': 1, 'cb-deuteranopia': 2, 'cb-tritanopia': 3, 'high-contrast': 4 };
+    const btns = document.querySelectorAll('#a11yMenu button');
+    if (btns[modes[mode]]) btns[modes[mode]].classList.add('active');
+    document.getElementById('a11yMenu').classList.remove('show');
+}
+
+document.getElementById('a11yToggle').addEventListener('click', () => {
+    document.getElementById('a11yMenu').classList.toggle('show');
+});
+
+document.getElementById('a11yToggle').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        document.getElementById('a11yMenu').classList.toggle('show');
+    }
+});
+
+// Close a11y menu on outside click
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('#a11yToggle') && !e.target.closest('#a11yMenu')) {
+        document.getElementById('a11yMenu').classList.remove('show');
+    }
+});
+
+// Keyboard shortcut: Alt+A for accessibility
+document.addEventListener('keydown', (e) => {
+    if (e.altKey && e.code === 'KeyA') {
+        e.preventDefault();
+        document.getElementById('a11yMenu').classList.toggle('show');
+    }
+});
+
+function showHowToPlay() {
+    document.getElementById('screenTitle').classList.add('hidden');
+    document.getElementById('screenHowTo').classList.remove('hidden');
+}
+
+function resetGame() {
+    gameState = {
+        phase: 'title',
+        playerTeam: null,
+        tournament: null,
+        currentMatch: null,
+        matchData: {
+            shots: 0, maxShots: 5,
+            playerGoals: 0, opponentGoals: 0,
+            opponentBase: 0,
+            stamina: 100, maxStamina: 100,
+            humidity: 30 + Math.random() * 50,
+            altitude: 0,
+            wind: { x: 0, z: 0, speed: 0 },
+            isNight: false,
+            isFreeKick: false,
+            barrierCount: 0,
+            extraTime: false,
+            orbCollected: false
+        }
+    };
+    clearSave();
+    backToTitle();
+}
+
+// ==================== GAME LOOP ====================
+function animate() {
+    requestAnimationFrame(animate);
+
+    const dt = Math.min(clock.getDelta(), 0.1);
+
+    if (gameState.phase === 'match') {
+        updateBallPhysics(dt);
+        updateWindParticles();
+
+        // Animação da barreira pulando
+        barrierPlayers.forEach(bp => {
+            if (bp.userData.isJumping) {
+                bp.userData.jumpTime += dt;
+                const jumpHeight = Math.sin(bp.userData.jumpTime * 5) * 1.5;
+                bp.position.y = Math.max(0, jumpHeight);
+                bp.userData.leftArm.rotation.z = 2.0;
+                bp.userData.rightArm.rotation.z = -2.0;
+                if (bp.userData.jumpTime > Math.PI / 5) {
+                    bp.userData.isJumping = false;
+                    bp.position.y = 0;
+                }
+            }
+        });
+
+        // Câmera segue bola suavemente durante replay
+        if (isReplaying && ball) {
+            camera.lookAt(ball.position.x, ball.position.y, ball.position.z);
+        }
+    }
+
+    renderer.render(scene, camera);
+}
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// ==================== INIT ====================
+window.onload = async () => {
+    await initDB();
+    checkContinue();
+    initThree();
+    document.getElementById('loading').style.display = 'none';
+    animate();
+};
+
+// PWA Service Worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+        self.addEventListener('install', e => self.skipWaiting());
+        self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+        self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
+    `)).catch(() => {});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="32" fill="#1a1a2e"/>
+  <circle cx="96" cy="80" r="35" fill="#fff"/>
+  <path d="M81 65a35 35 0 0 1 30 0l-15 26z" fill="#444"/>
+  <path d="M96 45l-15 26h30z" fill="#444"/>
+  <path d="M111 65l-15 26 15 10 15-10z" fill="#444"/>
+  <path d="M81 65l15 26H66z" fill="#444"/>
+  <path d="M96 101l-15-10H51l15-10z" fill="#444"/>
+  <path d="M96 101l15-10h30l-15 10z" fill="#444"/>
+  <text x="96" y="155" font-size="22" font-family="sans-serif" font-weight="bold" fill="#ffcc00" text-anchor="middle">WC</text>
+  <text x="96" y="180" font-size="16" font-family="sans-serif" font-weight="bold" fill="#ff0066" text-anchor="middle">2026</text>
+</svg>

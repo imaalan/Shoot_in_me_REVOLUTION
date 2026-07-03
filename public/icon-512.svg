@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#1a1a2e"/>
+  <circle cx="256" cy="210" r="95" fill="#fff"/>
+  <path d="M216 170a95 95 0 0 1 80 0l-40 70z" fill="#444"/>
+  <path d="M256 115l-40 70h80z" fill="#444"/>
+  <path d="M296 170l-40 70 40 27 40-27z" fill="#444"/>
+  <path d="M216 170l40 70h-80z" fill="#444"/>
+  <path d="M256 270l-40-27H120l40-27z" fill="#444"/>
+  <path d="M256 270l40-27h96l-40 27z" fill="#444"/>
+  <text x="256" y="410" font-size="58" font-family="sans-serif" font-weight="bold" fill="#ffcc00" text-anchor="middle">WC</text>
+  <text x="256" y="480" font-size="44" font-family="sans-serif" font-weight="bold" fill="#ff0066" text-anchor="middle">2026</text>
+</svg>
