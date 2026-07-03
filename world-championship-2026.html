@@ -1075,7 +1075,7 @@ function createGoalkeeper() {
     const gkGroup = new THREE.Group();
 
     // Corpo
-    const bodyGeo = new THREE.CapsuleGeometry(0.4, 0.8, 4, 8);
+    const bodyGeo = new THREE.CylinderGeometry(0.4, 0.8, 4, 8);
     const bodyMat = new THREE.MeshToonMaterial({ color: 0xff6600 });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     body.position.y = 0.8;
@@ -1089,7 +1089,7 @@ function createGoalkeeper() {
     gkGroup.add(head);
 
     // Braços
-    const armGeo = new THREE.CapsuleGeometry(0.12, 0.5, 4, 8);
+    const armGeo = new THREE.CylinderGeometry(0.12, 0.5, 4, 8);
     const armMat = new THREE.MeshToonMaterial({ color: 0xff6600 });
     const leftArm = new THREE.Mesh(armGeo, armMat);
     leftArm.position.set(-0.5, 1.0, 0);
@@ -1102,7 +1102,7 @@ function createGoalkeeper() {
     gkGroup.add(rightArm);
 
     // Pernas
-    const legGeo = new THREE.CapsuleGeometry(0.15, 0.6, 4, 8);
+    const legGeo = new THREE.CylinderGeometry(0.15, 0.6, 4, 8);
     const legMat = new THREE.MeshToonMaterial({ color: 0x000000 });
     const leftLeg = new THREE.Mesh(legGeo, legMat);
     leftLeg.position.set(-0.2, 0.3, 0);
@@ -1133,7 +1133,7 @@ function createGoalkeeper() {
 function createKicker() {
     const kGroup = new THREE.Group();
 
-    const bodyGeo = new THREE.CapsuleGeometry(0.35, 0.7, 4, 8);
+    const bodyGeo = new THREE.CylinderGeometry(0.35, 0.7, 4, 8);
     const bodyMat = new THREE.MeshToonMaterial({ color: 0x0066cc });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     body.position.y = 0.75;
@@ -1145,7 +1145,7 @@ function createKicker() {
     head.position.y = 1.4;
     kGroup.add(head);
 
-    const armGeo = new THREE.CapsuleGeometry(0.1, 0.45, 4, 8);
+    const armGeo = new THREE.CylinderGeometry(0.1, 0.45, 4, 8);
     const armMat = new THREE.MeshToonMaterial({ color: 0x0066cc });
     const leftArm = new THREE.Mesh(armGeo, armMat);
     leftArm.position.set(-0.45, 0.95, 0);
@@ -1155,7 +1155,7 @@ function createKicker() {
     rightArm.position.set(0.45, 0.95, 0);
     kGroup.add(rightArm);
 
-    const legGeo = new THREE.CapsuleGeometry(0.13, 0.55, 4, 8);
+    const legGeo = new THREE.CylinderGeometry(0.13, 0.55, 4, 8);
     const legMat = new THREE.MeshToonMaterial({ color: 0x000000 });
     const leftLeg = new THREE.Mesh(legGeo, legMat);
     leftLeg.position.set(-0.18, 0.28, 0);
@@ -1174,7 +1174,7 @@ function createKicker() {
 
 function createBarrierPlayer(x) {
     const bGroup = new THREE.Group();
-    const bodyGeo = new THREE.CapsuleGeometry(0.3, 0.6, 4, 8);
+    const bodyGeo = new THREE.CylinderGeometry(0.3, 0.6, 4, 8);
     const bodyMat = new THREE.MeshToonMaterial({ color: 0xcc0000 });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     body.position.y = 0.65;
@@ -1186,7 +1186,7 @@ function createBarrierPlayer(x) {
     head.position.y = 1.2;
     bGroup.add(head);
 
-    const armGeo = new THREE.CapsuleGeometry(0.08, 0.35, 4, 8);
+    const armGeo = new THREE.CylinderGeometry(0.08, 0.35, 4, 8);
     const armMat = new THREE.MeshToonMaterial({ color: 0xcc0000 });
     const leftArm = new THREE.Mesh(armGeo, armMat);
     leftArm.position.set(-0.35, 0.8, 0);
@@ -1196,7 +1196,7 @@ function createBarrierPlayer(x) {
     rightArm.position.set(0.35, 0.8, 0);
     bGroup.add(rightArm);
 
-    const legGeo = new THREE.CapsuleGeometry(0.11, 0.45, 4, 8);
+    const legGeo = new THREE.CylinderGeometry(0.11, 0.45, 4, 8);
     const legMat = new THREE.MeshToonMaterial({ color: 0x000000 });
     const leftLeg = new THREE.Mesh(legGeo, legMat);
     leftLeg.position.set(-0.15, 0.22, 0);
@@ -2796,20 +2796,25 @@ function onWindowResize() {
 
 // ==================== INIT ====================
 window.onload = async () => {
-    await initDB();
-    checkContinue();
-    initThree();
-    document.getElementById('loading').style.display = 'none';
-    animate();
+    try {
+        await initDB().catch(() => { db = null; });
+        checkContinue();
+        initThree();
+        document.getElementById('loading').style.display = 'none';
+        animate();
+    } catch (err) {
+        console.error('Init error:', err);
+        document.getElementById('loading').innerHTML =
+            '<p style="color:#ff0066;font-family:monospace;padding:20px;text-align:center;">' +
+            'Error: ' + err.message + '<br><br>Check console for details.</p>';
+    }
 };
 
-// PWA Service Worker
+// PWA Service Worker (best-effort, non-blocking)
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
-        self.addEventListener('install', e => self.skipWaiting());
-        self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
-        self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
-    `)).catch(() => {});
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
 }
 </script>
 </body>
