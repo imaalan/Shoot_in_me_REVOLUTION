@@ -1,135 +1,204 @@
-# ⚽ Shoot'em In: Apex Striker
+# World Championship 2026 — Shoot Em In Reloaded
 
-> Releitura moderna do clássico jogo de navegador de cobranças de falta e pênalti — **Edição Copa do Mundo 2026**.
+> Releitura em Three.js do classico *Shoot Em In*, readequada para a tematica da FIFA World Cup 2026. Penalty e falta, torneio completo com 48 selecoes, fisica 3D com efeito Magnus, estilo toon-shader com HUD grafite, deploy como PWA.
 
 <p align="center">
-  <img alt="HTML5" src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white">
-  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black">
-  <img alt="Canvas" src="https://img.shields.io/badge/Canvas%202D-111111">
+  <img alt="Three.js" src="https://img.shields.io/badge/Three.js-r128-049EF4?logo=threedotjs&logoColor=white">
+  <img alt="GSAP" src="https://img.shields.io/badge/GSAP-3.12-88CE02">
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ES2020-F7DF1E?logo=javascript&logoColor=black">
+  <img alt="PWA" src="https://img.shields.io/badge/PWA-Ready-5A0FC8">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-007D48">
   <img alt="World Cup 2026" src="https://img.shields.io/badge/Copa%202026-FF5000">
 </p>
 
-Um arcade de precisão: você é o batedor, posicionado na falta/pênalti, e precisa dominar a física do chute para superar a barreira, enganar o goleiro e acertar as gavetas mais difíceis do gol. Sem zero‑a‑zero: **errar custa uma vida**, acertar o ângulo vale ouro.
+---
+
+## Funcionalidades
+
+### Gameplay
+- **48 selecoes** com jogadores ficticios e atributos unicos (forca, precisao, curva)
+- **Torneio completo**: Fase de Grupos (12 grupos de 4) → Oitavas → Quartas → Semi → Final
+- **5 cobrancas por partida** — penalty ou falta (40% chance), aleatorio
+- **Gol de ouro** na prorrogacao (6a cobranca, dificuldade maxima)
+- **Cada erro = gol do adversário** — sem zero-a-zero
+
+### Fisica 3D
+- Gravidade, arrasto do ar, efeito Magnus (curva)
+- **Vento** dinamico com indicador visual e particulas
+- **Altitude** afeta velocidade e curva da bola (placa visual no estadio)
+- **Umidade** aumenta arrasto (barra pisca acima de 70%)
+- Colisao com goleiro, barreira, traves, travessao e chao
+
+### IA
+- **Goleiro preditivo** com dificuldade escalonada por fase do torneio (0.6x grupos → 1.5x final)
+- **Barreira** de 2-4 jogadores com pulo aleatorio sincronizado
+- **Torcida** 2D em sprites que pulam no gol e mudam cor pela selecao
+
+### Controles
+- **Mouse**: clique e arraste para mirar e definir forca
+- **Teclado**: setas para mirar, espaco para chutar
+- **Touch**: toque e arraste (mobile-first)
+
+### Audio
+- **TTS narracao** multilingue (PT/EN) via SpeechSynthesis: "GOL!", "DEFENDEU!", "NA TRAVE!"
+- **Efeitos sonoros procedurais** via Web Audio API: chute, gol, defesa, trave, barreira, orbe, torcida, apito
+
+### Mecanicas Extras
+- **Cansaco** reduz forca a cada chute; stamina abaixo de 40% alerta no HUD
+- **Orbe de energia** em posicao desafiadora — recupera 25% stamina
+- **Replay** em camera lenta apos cada chute
+- **Comemoracao** do jogador (pulo + bracos abertos) e da torcida
+
+### UI/UX
+- **HUD estilo grafite**: Permanent Marker, cores neon, painéis tortos (skew)
+- **Placar estilo transmissao** de TV com bandeiras
+- **Dia/noite dinamico** com floodlights
+- **Responsivo**: desktop, tablet, mobile
+- **Localization**: PT/EN com seletor de idioma
+
+### Infraestrutura
+- **PWA** com Service Worker e Web App Manifest (instalavel no mobile)
+- **Persistencia** via IndexedDB (save/load automatico)
+- **Acessibilidade**: modos daltonismo (protanopia/deuteranopia/tritanopia), alto contraste, labels ARIA, atalho Alt+A
+- **Vite build** com PWA plugin e Workbox caching
 
 ---
 
-## ✨ Funcionalidades
+## Como Jogar
 
-- **Modo Arcade Infinito** — 3 vidas, dificuldade que escala a cada 3 gols: surge a barreira → a barreira passa a pular → entra o vento dinâmico → o goleiro fica mais rápido, com mais alcance e antecipação.
-- **Controle de estilingue** (arrastar e soltar) com **preview da trajetória** em tempo real e **efeito/curva** (Magnus) aplicado pelo *flick* lateral no momento de soltar.
-- **Visão de trás do batedor** com **projeção em perspectiva real** (motor pensado em 3 eixos).
-- **Edição Copa 2026** — escolha entre 12 seleções (Brasil em destaque + EUA/México/Canadá como sedes). A seleção pinta a bola, o rastro e o uniforme.
-- **Sistema de pontuação por zonas**: meio `100` · gaveta `500` · ângulo `1000`, com **alvos bônus (x2)** e **multiplicador de combo**.
-- **Feedback de estádio**: refletores, gramado com listras em perspectiva, rede projetada, *screen shake* e áudio sintetizado (WebAudio) com botão de mudo.
-- **Touch‑first**: funciona com mouse e toque — pronto para futuro empacotamento mobile.
-
----
-
-## 🎮 Como jogar
-
-| Ação | Controle |
+| Acao | Controle |
 |------|----------|
-| Mirar e dar força | **Arraste para trás** (estilingue). Quanto mais longo o arrasto, mais potência. |
-| Conferir a mira | Siga a **linha pontilhada** (preview da trajetória) e o marcador no gol. |
-| Curvar a bola | Dê um **flick lateral** ao soltar — essencial para contornar a barreira. |
+| Mirar | **Arraste para tras** com o mouse, ou use **setas** ← → ↑ ↓ |
+| Chutar | **Solte** o mouse, ou pressione **ESPACO** |
+| Coletar orbe | Acerte o **orbe dourado** flutuante para recuperar energia |
 
-**Pontuação**
-
-- Meio do gol → **100**
-- Gaveta (canto baixo) → **500**
-- Ângulo (canto alto) → **1000**
-- Acertar o alvo vermelho → **x2**
-- Gols consecutivos aumentam o **combo** (multiplicador crescente).
-
-Você tem **3 vidas**. Cada chute que não vira gol (para fora, na trave, na barreira ou defendido) custa uma vida.
+### Mecanicas importantes
+- O **vento** desvia a bola — observe a seta no HUD
+- **Altitude alta** = bola mais rapida, menos curva
+- **Umidade alta** = mais arrasto, bola mais lenta
+- O **goleiro** fica mais rapido nas fases finais
+- **Cansaco** acumula — gerencie seus chutes
 
 ---
 
-## 🚀 Como rodar
+## Como Rodar
 
-O jogo é um **único arquivo HTML autossuficiente** — sem build, sem dependências.
+### Opcao 1: Abrir direto (zero setup)
+
+```
+world-championship-2026.html
+```
+
+Double-click para abrir no navegador. Funciona 100% offline.
+
+### Opcao 2: Vite dev server (recomendado para dev)
 
 ```bash
-# 1. Clone o repositório
 git clone https://github.com/imaalan/Shoot_in_me_REVOLUTION.git
 cd Shoot_in_me_REVOLUTION
-
-# 2. Abra o index.html no navegador (duplo clique já funciona)
-#    ou suba um servidor local:
-python3 -m http.server 8000
-# acesse http://localhost:8000
+npm install
+npm run dev
 ```
 
-### Publicar online (GitHub Pages)
+Acesse `http://localhost:5173`. HMR ativo, PWA funciona via HTTP.
 
-Como o `index.html` está na raiz, é só ativar o Pages:
-`Settings → Pages → Source: Deploy from a branch → main / root`. O jogo fica disponível em `https://imaalan.github.io/Shoot_in_me_REVOLUTION/`.
+### Build de Producao
 
----
-
-## 🧱 Arquitetura técnica
-
-Apesar de ser renderizado em **Canvas 2D**, o jogo simula um espaço de **3 eixos** — projetado para um futuro port a 3D (Three.js) trocar apenas o renderizador, não a lógica.
-
-- **Coordenadas de mundo** `x` (lateral) · `y` (altura) · `z` (profundidade rumo ao gol).
-- **Projeção em perspectiva** tipo *pinhole*: pontos mais distantes (maior `z`) ficam menores e mais altos na tela, dando a clássica visão de trás do batedor.
-- **Física em passo fixo** (`1/120s`) com gravidade, arrasto do ar, vento lateral e **efeito Magnus** (spin) — estável independente do FPS.
-- **IA reativa do goleiro**: prevê o ponto de cruzamento da bola na linha (com erro que diminui conforme o nível), reage após um tempo de reação e tem alcance/antecipação escaláveis.
-- **Colisões por travessia de plano**: barreira, linha do gol e zonas de pontuação são resolvidas no instante em que a bola cruza cada profundidade `z`.
-
+```bash
+npm run build    # gera dist/ com PWA completa
+npm run preview  # preview do build
 ```
-Entrada (drag) ──► vetor de lançamento (vx, vy, vz, spin)
-                     │
-                     ▼
-         Integrador de física (passo fixo)
-                     │
-        ┌────────────┼─────────────┐
-        ▼            ▼             ▼
-   Barreira      Goleiro       Linha do gol
-                                   │
-                                   ▼
-                      Zonas + combo + alvo bônus ──► pontuação
+
+### Deploy no GitHub Pages
+
+Ativar em: `Settings → Pages → Source: Deploy from a branch → main / (root)`
+
+Ou via GitHub Actions (ja configurado no `vite.config.js`):
+
+```yaml
+# Push na main → build automatico → deploy
 ```
 
 ---
 
-## 🗺️ Roadmap
+## Stack Tecnica
 
-- [ ] **Modo Torneio mata‑mata** (Copa 2026) — caminho até a final.
-- [ ] **Port para 3D** com Three.js, reaproveitando o motor x/y/z.
-- [ ] **Leaderboard / recorde persistente** (back‑end ou armazenamento local fora do sandbox).
-- [ ] **Empacotamento mobile** (Capacitor/Cordova) para Android e iOS.
-- [ ] Loja de cosméticos (skins de bola, rastros, luvas).
-
----
-
-## 🎨 Design system
-
-A identidade visual das telas e do HUD aplica o sistema de design **inspirado na Nike**: UI monocromática (`#111111` / branco / cinzas), tipografia display condensada em caixa alta (Oswald como substituto livre da Nike Futura ND, *line-height* 0.90), corpo Helvetica peso 500, botões *pill* (30px) e elevação plana — deixando a cor vir do "produto" (gramado, bola e cores da seleção), com acento expressivo único **Orange Flash `#FF5000`**.
-
-Tokens extraídos do catálogo [**awesome-design-md**](https://github.com/VoltAgent/awesome-design-md) (MIT).
+| Camada | Tecnologia | Justificativa |
+|--------|-----------|---------------|
+| Engine 3D | Three.js r128 | Padrão WebGL, leve, comunidade vasta |
+| Animacao | GSAP 3.12 | Tweens suaves, performático |
+| Física | Custom (Euler) | Controle total sobre Magnus, altitude, umidade |
+| Áudio | Web Audio API + TTS | Procedural, sem assets externos |
+| Persistencia | IndexedDB | Async, ~50MB+ (LocalStorage insuficiente) |
+| Build | Vite 5.x | HMR rapido, PWA plugin |
+| Linguagem | Vanilla JS (ES2020+) | Sem framework UI, bundle minimo |
+| CSS | CSS3 puro | Variáveis, media queries, keyframes |
+| Fontes | Permanent Marker, Black Ops One, Roboto Condensed | Estilo grafite + broadcast |
 
 ---
 
-## 📁 Estrutura do projeto
+## Estrutura do Projeto
 
 ```
 Shoot_in_me_REVOLUTION/
-├── index.html      # Jogo completo (HTML + CSS + JS em um arquivo)
+├── world-championship-2026.html   # Jogo completo (single-file ~3000 linhas)
+├── SDD-World-Championship-2026.md # Software Design Document
+├── TDD-World-Championship-2026.md # Technical Design Document
+├── package.json                   # Dependencias (Vite, Vitest)
+├── vite.config.js                 # Config Vite + PWA plugin
+├── public/
+│   ├── icon-192.svg              # Icone PWA 192x192
+│   └── icon-512.svg              # Icone PWA 512x512
+├── LICENSE                        # MIT
 ├── README.md
-├── LICENSE
 └── .gitignore
 ```
 
 ---
 
-## 📄 Licença
+## Arquitetura
 
-Distribuído sob a licença **MIT**. Veja [`LICENSE`](LICENSE) para detalhes.
+```
+┌─────────────────────────────────────────────────┐
+│              Aplicacao (Browser)                  │
+│                                                   │
+│  Presentation ──► Application ──► Domain          │
+│  (DOM + HUD)     (GameState FSM)  (Tournament)   │
+│  (Screen Mgr)    (Input Ctrl)     (Match Engine)  │
+│                  (Audio Engine)   (Physics + AI)   │
+│                                                   │
+│  Infrastructure: Three.js Renderer + IndexedDB    │
+└─────────────────────────────────────────────────┘
+```
 
-## 👤 Autor
+**Padroes de projeto**: State Machine (FSM), Observer, Factory, Strategy, Singleton, Command, Template Method.
 
-**Alan de Jesus Lima** — desenvolvimento e design.
+**Decisões de design**: Single-file para prototipo (zero build), fisica custom (penalty e caso simples), Three.js (leve para PWA), IndexedDB (capacidade superior a LocalStorage), TTS (sem assets de audio externos).
 
-> Projeto de portfólio. Contribuições, *issues* e *pull requests* são bem‑vindos.
+---
+
+## Roadmap
+
+- [x] Torneio completo (48 selecoes, grupos + mata-mata)
+- [x] Fisica 3D (Magnus, vento, altitude, umidade)
+- [x] IA preditiva (goleiro + barreira)
+- [x] Procedural SFX (Web Audio API)
+- [x] Acessibilidade (daltonismo, ARIA)
+- [x] PWA (Service Worker, IndexedDB)
+- [x] Vite build setup
+- [ ] Unit tests (Vitest)
+- [ ] Analytics / Error tracking
+- [ ] Modo multiplayer online (futuro)
+- [ ] Assets de audio customizados (futuro)
+
+---
+
+## Licenca
+
+Distribuido sob a licenca **MIT**. Veja [`LICENSE`](LICENSE) para detalhes.
+
+## Autor
+
+**Alan de Jesus Lima** — desenvolvimento, design e arquitetura.
+
+> Projeto de portfólio. Contribuicoes, issues e pull requests sao bem-vindos.
